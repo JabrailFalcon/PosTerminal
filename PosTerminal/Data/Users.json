@@ -1,0 +1,27 @@
+{
+  "name": "Users list",
+  "size": 2,
+  "list": [
+    {
+      "id": "U1",
+      "f_name": "Testname1",
+      "l_name": "Testlastname1",
+      "role": "admin",
+      "mobile": "+380552551899",
+      "email": "admin.mail@gmail.com",
+      "status": "on",
+      "password": "0000"
+    },
+    {
+      "id": "U2",
+      "f_name": "Testname2",
+      "l_name": "Testlastname2",
+      "role": "cashier",
+      "mobile": "+380552661800",
+      "email": "cashier.mail@gmail.com",
+      "status": "on",
+      "password": "1111"
+    }
+  ]
+
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Products list",
+  "size": 1,
+  "list": [
+    {
+      "id": "P1",
+      "sku": "TF865",
+      "p_name": "Testname1",
+      "category": "category1",
+      "in_price": "0.0",
+      "out_price": "0.0",
+      "description": "description1"
+    }
+  ]
+}

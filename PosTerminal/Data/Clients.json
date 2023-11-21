@@ -1,0 +1,15 @@
+{
+  "name": "Clients list",
+  "size": 1,
+  "list": [
+    {
+      "id": "C1",
+      "f_name": "Testname1",
+      "l_name": "Testlastname1",
+      "mobile": "+380680004443",
+      "email": "client.mail@gmail.com",
+      "discount": "0"
+    }
+  ]
+
+}

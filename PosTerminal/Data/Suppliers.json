@@ -1,0 +1,19 @@
+{
+  "name": "Suppliers list",
+  "size": 1,
+  "list": [
+    {
+      "id": "S1",
+      "company_name": "TestSuppliersname1",
+      "company_mobile": "+380980033343",
+      "company_email": "suppliers.mail@gmail.com",
+      "address": "suppliers adress1",
+      "f_name": "Testname1",
+      "l_name": "Testlastname1",
+      "mobile": "+380552551899",
+      "email": "manager.mail@gmail.com",
+      "jobtitle": "Manager"
+    }
+  ]
+
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Location list",
+  "size": 1,
+  "list": [
+    {
+      "id": "L1",
+      "local_name": "Testname1",
+      "address": "Test adress1"
+    }
+  ]
+}
