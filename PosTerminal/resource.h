@@ -36,6 +36,7 @@
 #define IDC_BUTTON3                     1002
 #define IDC_BUTTON4                     1003
 #define IDC_EDIT1                       1003
+#define IDC_BUTTON_Users                1003
 #define IDC_BUTTON5                     1004
 #define IDC_EDIT2                       1004
 #define IDC_BUTTON6                     1005
@@ -70,9 +71,21 @@
 #define IDC_BUTTON18                    1038
 #define IDC_BUTTON19                    1039
 #define IDC_BUTTON20                    1040
+#define IDC_BTN_Del_Product             1040
+#define IDC_BTN_Del                     1040
 #define IDC_BUTTON21                    1041
+#define IDC_BTN_Close                   1041
 #define IDC_Btn_Cancel                  1045
 #define IDC_btn_Login                   1046
+#define IDC_BUTTON_Terminal             1047
+#define IDC_BUTTON_Client               1048
+#define IDC_BUTTON_Product              1049
+#define IDC_BUTTON_Pricing              1050
+#define IDC_BUTTON_Location             1051
+#define IDC_BUTTON_Supliers             1052
+#define IDC_BUTTON_Reports              1053
+#define IDC_BTN_Add_Product             1054
+#define IDC_BTN_Pay                     1055
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -82,7 +95,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1047
+#define _APS_NEXT_CONTROL_VALUE         1056
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
