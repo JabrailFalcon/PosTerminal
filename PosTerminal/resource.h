@@ -71,7 +71,6 @@
 #define IDC_BUTTON18                    1038
 #define IDC_BUTTON19                    1039
 #define IDC_BUTTON20                    1040
-#define IDC_BTN_Del_Product             1040
 #define IDC_BTN_Del                     1040
 #define IDC_BUTTON21                    1041
 #define IDC_BTN_Close                   1041
@@ -86,6 +85,24 @@
 #define IDC_BUTTON_Reports              1053
 #define IDC_BTN_Add_Product             1054
 #define IDC_BTN_Pay                     1055
+#define IDC_BTN_CloseP                  1056
+#define IDC_BTN_DelP                    1057
+#define IDC_BTN_EditP                   1058
+#define IDC_BTN_Select                  1059
+#define IDC_BTN_Category                1060
+#define IDC_BTN_AddProdact1             1061
+#define IDC_BTN_Close2                  1062
+#define IDC_BTN_Del2                    1063
+#define IDC_BTN_Edit2                   1064
+#define IDC_BTN_Select2                 1065
+#define IDC_BTN_AddUser                 1066
+#define IDC_BTN_SKU                     1067
+#define IDC_BTN_ADD3                    1068
+#define IDC_BTN_CANCEL3                 1069
+#define IDC_EDIT_SKU                    1070
+#define IDC_EDIT_PRODNAME               1071
+#define IDC_COMBO_CATEGORY              1072
+#define IDC_EDIT_DESCRIPTION            1073
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -95,7 +112,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1056
+#define _APS_NEXT_CONTROL_VALUE         1074
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
