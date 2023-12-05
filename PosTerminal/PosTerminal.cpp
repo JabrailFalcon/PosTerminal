@@ -7,10 +7,12 @@
 #define MAX_LOADSTRING 100
 
 //* Description
-HWND hEdit1, hEdit2, hEdit3;
+HWND hEdit1, hEdit2, hEdit3, hEdit4, hEdit5, hEdit6, hEdit7, hEdit8, hEdit9;
 HWND hBtnLogin, hBtnClose, hBtnTerminal, hBtnProduct, hBtnPricing, hBtnLocation, hBtnClient, hBtnUsers, hBtnSupliers, hBtnReports;
-HWND hBtnAdd, hBtnDel, hBtnPay, hBtnSelect, hBtnEdit, hBtnCategory, hBtnGenerate;
+HWND hBtnAdd, hBtnDel, hBtnPay, hBtnSelect, hBtnEdit, hBtnCategory, hBtnGenerate, hBtnMovement, hBtnApply1, hBtnApply2, hBtnSave;
 HWND hCombo1, hCombo2, hCombo3;
+HWND hList;
+HWND hDataFrom, hDataTo;
 
 //* GLOBAL Variers:
 bool isAuthorize = true;
@@ -36,6 +38,12 @@ INT_PTR CALLBACK    Products(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    AddProduc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Users(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    AddUser(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    Location(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    AddLocation(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    Pricing(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    Clients(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    Supliers(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    Report(HWND, UINT, WPARAM, LPARAM);
 
 // 1
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -275,25 +283,25 @@ INT_PTR CALLBACK MainWindow(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
             else if (wmId == IDC_BUTTON_Product) {
 
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG3), hDlg, Products); 
-                
+
             }
             else if (wmId == IDC_BUTTON_Pricing) {
-
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG15), hDlg, Pricing);
             }
             else if (wmId == IDC_BUTTON_Location) {
-
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG10), hDlg, Location);
             }
             else if (wmId == IDC_BUTTON_Client) {
-
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG6), hDlg, Clients);
             }
             else if (wmId == IDC_BUTTON_Users) {
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG4), hDlg, Users);
             }
             else if (wmId == IDC_BUTTON_Supliers) {
-
+               DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG8), hDlg, Supliers);
             }
             else if (wmId == IDC_BUTTON_Reports) {
-                 
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG19), hDlg, Report);
             }
             else if (wmId == IDOK || wmId == IDCANCEL)
             {
@@ -442,7 +450,7 @@ INT_PTR CALLBACK AddProduc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
     return (INT_PTR)FALSE;
 }
 
-// 8 -----------------  Users  ----------------------
+// 9 -----------------  Users  ----------------------
 INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);
@@ -475,6 +483,296 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
             }
             else if (wmId == IDC_BTN_Close2) {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            else if (wmId == IDOK || wmId == IDCANCEL)
+            {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
+// 9 ----------------- Location ---------------------
+INT_PTR CALLBACK Location(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+    {
+        // Description
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_SERCH_LOC);
+        hList = GetDlgItem(hDlg, IDC_LIST_LOC);
+        hBtnAdd = GetDlgItem(hDlg, IDC_BTN_ADDLOCATION);
+        hBtnSelect = GetDlgItem(hDlg, IDC_BTN_SELECT3);
+        hBtnEdit = GetDlgItem(hDlg, IDC_BTN_EDIT_LOC);
+        hBtnDel = GetDlgItem(hDlg, IDC_BTN_DEL_LOC);
+        hBtnMovement = GetDlgItem(hDlg, IDC_BTN_MOVEMENT);
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CLOSE_LOC);
+    }
+    return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        int wmId = LOWORD(wParam);
+        {
+            if (wmId == IDC_BTN_ADDLOCATION) {
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG11), hDlg, AddLocation);
+            }
+            else if (wmId == IDC_BTN_SELECT3) {
+
+            }
+            else if (wmId == IDC_BTN_EDIT_LOC) {
+
+            }
+            else if (wmId == IDC_BTN_DEL_LOC) {
+
+            }
+            else if (wmId == IDC_BTN_MOVEMENT) {
+
+            }
+            else if (wmId == IDC_BTN_CLOSE_LOC) {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            else if (wmId == IDOK || wmId == IDCANCEL)
+            {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
+INT_PTR CALLBACK AddLocation(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+    {
+        // Description
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_LOC_NAME);
+        hEdit2 = GetDlgItem(hDlg, IDC_EDIT_LOC_ADRESS);
+        hBtnSave = GetDlgItem(hDlg, IDC_BTN_SAVE_NEW_LOC);
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CANCEL_NLOC);
+    }
+    return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        int wmId = LOWORD(wParam);
+        {
+            if (wmId == IDC_BTN_SAVE_NEW_LOC) {
+
+            }
+            else if (wmId == IDC_BTN_CANCEL_NLOC) {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            else if (wmId == IDOK || wmId == IDCANCEL)
+            {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
+// 10 ----------------- Pricing ---------------------
+INT_PTR CALLBACK Pricing(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+    {
+        // Description 
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_SEARCH_PR);
+        hList = GetDlgItem(hDlg, IDC_LIST_PR);
+        hCombo1 = GetDlgItem(hDlg, IDC_COMBO_CATEG_PR);
+        hCombo2 = GetDlgItem(hDlg, IDC_COMBO_SORT_PR);
+        hBtnSelect = GetDlgItem(hDlg, IDC_BTN_SELECT_PR);
+        hBtnApply1 = GetDlgItem(hDlg, IDC_BTN_APPLY1);
+        hBtnApply2 = GetDlgItem(hDlg, IDC_BTN_APPLY2);
+        hBtnSave = GetDlgItem(hDlg, IDC_BTN_SAVE_PRICE);
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CLOSE_PR);
+    }
+    return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        int wmId = LOWORD(wParam);
+        {
+            if (wmId == IDC_BTN_SELECT_PR) {
+
+            }
+            else if (wmId == IDC_BTN_APPLY1) {
+
+            }
+            else if (wmId == IDC_BTN_APPLY2) {
+
+            }
+            else if (wmId == IDC_BTN_SAVE_PRICE) {
+
+            }
+            else if (wmId == IDC_BTN_CLOSE_PR) {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            else if (wmId == IDOK || wmId == IDCANCEL)
+            {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
+// 11 ----------------- Clients ---------------------
+INT_PTR CALLBACK Clients(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+    {
+        // Description 
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_SEARC_CL);
+        hList = GetDlgItem(hDlg, IDC_LIST_CLIENT);
+        hCombo1 = GetDlgItem(hDlg, IDC_COMBO_SORT_CL);
+        hBtnAdd = GetDlgItem(hDlg, IDC_BTN_ADD_CL);
+        hBtnSelect = GetDlgItem(hDlg, IDC_BTN_SELECT_CL);
+        hBtnEdit = GetDlgItem(hDlg, IDC_BTN_EDIT_CL);
+        hBtnDel = GetDlgItem(hDlg, IDC_BTN_DEL_CL);
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CLOSE_CL);
+    }
+    return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        int wmId = LOWORD(wParam);
+        {
+            if (wmId == IDC_BTN_ADD_CL) {
+
+            }
+            else if (wmId == IDC_BTN_SELECT_CL) {
+
+            }
+            else if (wmId == IDC_BTN_EDIT_CL) {
+
+            }
+            else if (wmId == IDC_BTN_DEL_CL) {
+
+            }
+            else if (wmId == IDC_BTN_CLOSE_CL) {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            else if (wmId == IDOK || wmId == IDCANCEL)
+            {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
+// 12 ----------------- Supliers ---------------------
+INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+    {
+        // Description 
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_SEARCH_SUP);
+        hList = GetDlgItem(hDlg, IDC_LIST_SUP);
+        hCombo1 = GetDlgItem(hDlg, IDC_COMBO_SORT_SUP);
+        hBtnAdd = GetDlgItem(hDlg, IDC_BTN_ADD_SUP);
+        hBtnSelect = GetDlgItem(hDlg, IDC_BTN_SELECT_SUP);
+        hBtnEdit = GetDlgItem(hDlg, IDC_BTN_EDIT_SUP);
+        hBtnDel = GetDlgItem(hDlg, IDC_BTN_DEL_SUP);
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CLOSE_SUP);
+    }
+    return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        int wmId = LOWORD(wParam);
+        {
+            if (wmId == IDC_BTN_ADD_SUP) {
+
+            }
+            else if (wmId == IDC_BTN_SELECT_SUP) {
+
+            }
+            else if (wmId == IDC_BTN_EDIT_SUP) {
+
+            }
+            else if (wmId == IDC_BTN_DEL_SUP) {
+
+            }
+            else if (wmId == IDC_BTN_CLOSE_SUP) {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            else if (wmId == IDOK || wmId == IDCANCEL)
+            {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
+// 13 ----------------- Report ---------------------
+INT_PTR CALLBACK Report(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+    {
+        // Description 
+        
+        hCombo1 = GetDlgItem(hDlg, IDC_COMBO_SORT_SUP);
+        hCombo2 = GetDlgItem(hDlg, IDC_COMBO_SORT_SUP);
+        hDataFrom = GetDlgItem(hDlg, IDC_DATETIMEPICKER_fRP);
+        hDataTo = GetDlgItem(hDlg, IDC_DATETIMEPICKER_tRP);
+        hList = GetDlgItem(hDlg, IDC_LIST_REPORT);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_CASH_BALANCE_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_VISA_BALANCE_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_TOTAL_INCOME_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_TOTAL_CASH_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_TOTAL_VISA_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_TOTAL_AMOUT_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_TOTAL_EXPE_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_TOTAL_EXPE_CASH_RP);
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_TOTAL_EXPE_VISA_RP); 
+        hBtnSelect = GetDlgItem(hDlg, IDC_BTN_SELECT_RP);
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CLOSE_RP); 
+    }
+    return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        int wmId = LOWORD(wParam);
+        {
+            if (wmId == IDC_BTN_SELECT_RP) {
+
+            }
+            else if (wmId == IDC_BTN_CLOSE_RP) {
                 EndDialog(hDlg, wmId);
                 return (INT_PTR)TRUE;
             }
