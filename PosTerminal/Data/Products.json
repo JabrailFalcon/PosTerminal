@@ -1,15 +1,45 @@
 {
-  "name": "Products list",
-  "size": 1,
-  "list": [
+  "size": 4,
+  "products": [
     {
-      "id": "P1",
+      "id": 1,
       "sku": "TF865",
-      "p_name": "Testname1",
+      "name": "Testname1",
       "category": "category1",
-      "in_price": "0.0",
-      "out_price": "0.0",
-      "description": "description1"
+      "in_price": 10.10,
+      "out_price": 10.10,
+      "description": "description1",
+      "quantity" :  124
+    },
+    {
+      "id": 2,
+      "sku": "TF866",
+      "name": "Testname2",
+      "category": "category2",
+      "in_price": 20.20,
+      "out_price": 20.20,
+      "description": "description2",
+      "quantity": 222
+    },
+    {
+      "id": 3,
+      "sku": "TF867",
+      "name": "Testname3",
+      "category": "category3",
+      "in_price": 30.30,
+      "out_price": 30.30,
+      "description": "description3",
+      "quantity": 444
+    },
+    {
+      "id": 4,
+      "sku": "TF868",
+      "name": "Testname4",
+      "category": "category4",
+      "in_price": 40.40,
+      "out_price": 40.40,
+      "description": "description4",
+      "quantity": 766
     }
   ]
 }

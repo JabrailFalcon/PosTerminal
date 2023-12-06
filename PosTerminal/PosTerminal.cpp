@@ -3,6 +3,7 @@
 
 #include "framework.h"
 #include "PosTerminal.h"
+#include "ProductsRepo.h"
 
 #define MAX_LOADSTRING 100
 
@@ -11,13 +12,16 @@ HWND hEdit1, hEdit2, hEdit3, hEdit4, hEdit5, hEdit6, hEdit7, hEdit8, hEdit9;
 HWND hBtnLogin, hBtnClose, hBtnTerminal, hBtnProduct, hBtnPricing, hBtnLocation, hBtnClient, hBtnUsers, hBtnSupliers, hBtnReports;
 HWND hBtnAdd, hBtnDel, hBtnPay, hBtnSelect, hBtnEdit, hBtnCategory, hBtnGenerate, hBtnMovement, hBtnApply1, hBtnApply2, hBtnSave;
 HWND hCombo1, hCombo2, hCombo3;
-HWND hList;
+HWND hList, hProductsList;
 HWND hDataFrom, hDataTo;
 
 //* GLOBAL Variers:
 bool isAuthorize = true;
 bool isAdmin = true; 
 bool continueProcess = true;
+Helper helper;
+//* Products
+auto productsRepo = std::make_unique<ProductsRepo>();
 // ------
 
 
@@ -371,7 +375,19 @@ INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         hBtnSelect = GetDlgItem(hDlg, IDC_BTN_Select);
         hBtnEdit = GetDlgItem(hDlg, IDC_BTN_EditP); 
         hBtnDel = GetDlgItem(hDlg, IDC_BTN_DelP);
-        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CloseP);  
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CloseP);
+        //...
+        hProductsList = GetDlgItem(hDlg, IDC_LIST_PRODUCTS);
+
+        // Load Data
+        productsRepo->loadData();
+        productsRepo->displayAllProducts(hDlg, hProductsList);
+        /*std::vector<Product> buff = productsRepo->getProducts();
+        for (auto& p : buff) {
+            TCHAR* pInfo = helper.string_tchar(p.getSKU());
+            SendMessage(hProductsList, LB_ADDSTRING, 0, LPARAM(pInfo));
+            delete[] pInfo;
+        }*/
     }
     return (INT_PTR)TRUE;
 
