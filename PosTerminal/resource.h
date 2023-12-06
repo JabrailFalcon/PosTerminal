@@ -260,6 +260,7 @@
 #define IDC_BTN_CANCEL_ADDCLIENT        1193
 #define IDC_EDIT_COMNAME_SUPPL          1194
 #define IDC_EDIT_FN_SAPP                1195
+#define IDC_LIST_PRODUCTS               1196
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -269,7 +270,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1196
+#define _APS_NEXT_CONTROL_VALUE         1198
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

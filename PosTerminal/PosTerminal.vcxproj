@@ -148,11 +148,12 @@
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientsRepo.cpp" />
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="jsoncpp.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="LocationsRepo.cpp" />
     <ClCompile Include="PosTerminal.cpp" />
-    <ClCompile Include="Product..cpp" />
+    <ClCompile Include="Product.cpp" />
     <ClCompile Include="ProductsRepo.cpp" />
     <ClCompile Include="Supplier.cpp" />
     <ClCompile Include="SuppliersRepo.cpp" />
