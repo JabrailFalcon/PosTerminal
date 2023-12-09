@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by PosTerminal.rc
+// Включаемый файл, созданный в Microsoft Visual C++.
+// Используется PosTerminal.rc
 //
 #define IDC_MYICON                      2
 #define IDD_POSTERMINAL_DIALOG          102
@@ -64,6 +64,7 @@
 #define IDC_EDIT10                      1009
 #define IDC_EDIT_VISA_BALANCE_RP        1009
 #define IDC_COMBO_STATUS_AD_USER        1009
+#define IDC_COMBO_STATUS_AD_USER2       1010
 #define IDC_SLIDER1                     1014
 #define IDC_LIST2                       1015
 #define IDC_LIST_USERS                  1015

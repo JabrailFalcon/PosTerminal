@@ -9,9 +9,10 @@ public:
     UsersRepo();
     void loadData();
     void saveData();
-    void addUser();
+    void addUser(const User& newUser);
     void editUser();
     void deleteUser();
+    void clear();
     void displayUsers(HWND hDlg, HWND hUsersList) const;
     std::vector<User> getUsers() const;
 };

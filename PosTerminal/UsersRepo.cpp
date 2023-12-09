@@ -33,16 +33,25 @@ void UsersRepo::loadData()
 }
 
 void UsersRepo::saveData()
-{}
+{
+    
+}
 
-void UsersRepo::addUser()
-{}
+void UsersRepo::addUser(const User& newUser)
+{
+    users.push_back(newUser);
+}
 
 void UsersRepo::editUser()
 {}
 
 void UsersRepo::deleteUser()
 {}
+
+void UsersRepo::clear()
+{
+    users.clear();
+}
 
 void UsersRepo::displayUsers(HWND hDlg, HWND hUsersList) const
 {
