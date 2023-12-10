@@ -21,6 +21,7 @@ HWND hDataFrom, hDataTo;
 bool isAuthorize = true;
 bool isAdmin = true;
 bool continueProcess = true;
+bool isBtnEdit = false;
 Helper helper;
 //* Products
 auto productsRepo = std::make_unique<ProductsRepo>();
@@ -29,7 +30,7 @@ auto productsRepo = std::make_unique<ProductsRepo>();
 auto usersRepo = std::make_unique<UsersRepo>();
 
 //* Supliers
-auto supplierRepo = std::make_unique<SuppliersRepo>("Data/Suppliers.json");
+auto supplierRepo = std::make_unique<SuppliersRepo>("Data/Suppliers.json", "filterId.txt");
 // ------
 
 
@@ -1002,18 +1003,20 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                     SetFocus(hEdit1); 
                 }
                 else {
-                    supplierRepo->displayExist(buff1, hDlg, hList); 
+                    supplierRepo->displayExist(buff1, hDlg, hList);
+                  
                 }
             }
             else if (wmId == IDC_BTN_EDIT_SUP) {
+                isBtnEdit = true; 
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG9), hDlg, AddSuplier);
-                supplierRepo->saveData();
+                    
             }
             else if (wmId == IDC_BTN_DEL_SUP) {
-                // ***!!!!
                 int selIndex = SendMessage(hList, LB_GETCURSEL, 0, 0); 
                 int colItem = SendMessage(hList, LB_DELETESTRING, WPARAM(selIndex), 0); 
-                //....
+                supplierRepo->delSuplier(selIndex);
+                // ->
                 supplierRepo->saveData();
             }
             else if (wmId == IDC_BTN_CLOSE_SUP) {
@@ -1067,70 +1070,95 @@ INT_PTR CALLBACK AddSuplier(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
             TCHAR buff8[100];
             TCHAR buff9[100];
             if (wmId == IDC_BTN_SAVE_ADDSAPP) {
-                GetWindowText(hEdit1, buff1, 100);
-                GetWindowText(hEdit2, buff2, 100);
-                GetWindowText(hEdit3, buff3, 100);
-                GetWindowText(hEdit4, buff4, 100);
-                GetWindowText(hEdit5, buff5, 100);
-                GetWindowText(hEdit6, buff6, 100);
-                GetWindowText(hEdit7, buff7, 100);
-                GetWindowText(hEdit8, buff8, 100);
-                GetWindowText(hEdit9, buff9, 100);
-                if (lstrlen(buff1) == 0) {
-                    MessageBox(hDlg, L"Input company name!", L"Warning!", MB_OK | MB_ICONWARNING);
+                if (isBtnEdit) {
                    
-                    SetFocus(hEdit1);
-                }
-                else if (lstrlen(buff2) == 0) {
-                    MessageBox(hDlg, L"Input company mail!", L"Warning!", MB_OK | MB_ICONWARNING);
+                    // ....
+                    MessageBox(hDlg, L"EDIT - EDIT", L"Warning!", MB_OK | MB_ICONWARNING);
 
-                    SetFocus(hEdit2);
-                }
-                else if (lstrlen(buff3) == 0) {
-                    MessageBox(hDlg, L"Input company contact number!", L"Warning!", MB_OK | MB_ICONWARNING);
-
-                    SetFocus(hEdit3);
-                }
-                else if (lstrlen(buff4) == 0) {
-                    MessageBox(hDlg, L"Input company adress!", L"Warning!", MB_OK | MB_ICONWARNING);
-
-                    SetFocus(hEdit4);
-                }
-                else if (lstrlen(buff5) == 0) {
-                    MessageBox(hDlg, L"Input contact person name!", L"Warning!", MB_OK | MB_ICONWARNING);
-
-                    SetFocus(hEdit5);
-                }
-                else if (lstrlen(buff6) == 0) {
-                    MessageBox(hDlg, L"Input contact person last name!", L"Warning!", MB_OK | MB_ICONWARNING);
-
-                    SetFocus(hEdit6);
-                }
-                else if (lstrlen(buff7) == 0) {
-                    MessageBox(hDlg, L"Input contact person mobile number!", L"Warning!", MB_OK | MB_ICONWARNING);
-
-                    SetFocus(hEdit7);
-                }
-                else if (lstrlen(buff8) == 0) {
-                    MessageBox(hDlg, L"Input contact person mail!", L"Warning!", MB_OK | MB_ICONWARNING);
-
-                    SetFocus(hEdit8);
-                }
-                else if (lstrlen(buff9) == 0) {
-                    MessageBox(hDlg, L"Input job title!", L"Warning!", MB_OK | MB_ICONWARNING);
-
-                    SetFocus(hEdit9);
+                    
                 }
                 else {
-                    //supplierRepo->addSuplier();
+                    GetWindowText(hEdit1, buff1, 100);
+                    GetWindowText(hEdit2, buff2, 100);
+                    GetWindowText(hEdit3, buff3, 100);
+                    GetWindowText(hEdit4, buff4, 100);
+                    GetWindowText(hEdit5, buff5, 100);
+                    GetWindowText(hEdit6, buff6, 100);
+                    GetWindowText(hEdit7, buff7, 100);
+                    GetWindowText(hEdit8, buff8, 100);
+                    GetWindowText(hEdit9, buff9, 100);
+                    if (lstrlen(buff1) == 0) {
+                        MessageBox(hDlg, L"Input company name!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit1);
+                    }
+                    else if (lstrlen(buff2) == 0) {
+                        MessageBox(hDlg, L"Input company mail!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit2);
+                    }
+                    else if (lstrlen(buff3) == 0) {
+                        MessageBox(hDlg, L"Input company contact number!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit3);
+                    }
+                    else if (lstrlen(buff4) == 0) {
+                        MessageBox(hDlg, L"Input company adress!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit4);
+                    }
+                    else if (lstrlen(buff5) == 0) {
+                        MessageBox(hDlg, L"Input contact person name!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit5);
+                    }
+                    else if (lstrlen(buff6) == 0) {
+                        MessageBox(hDlg, L"Input contact person last name!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit6);
+                    }
+                    else if (lstrlen(buff7) == 0) {
+                        MessageBox(hDlg, L"Input contact person mobile number!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit7);
+                    }
+                    else if (lstrlen(buff8) == 0) {
+                        MessageBox(hDlg, L"Input contact person mail!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit8);
+                    }
+                    else if (lstrlen(buff9) == 0) {
+                        MessageBox(hDlg, L"Input job title!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                        SetFocus(hEdit9);
+                    }
+                    else {
+
+                        supplierRepo->addSuplier(buff1, buff3, buff2, buff4, buff5, buff6, buff7, buff8, buff9);
+                        MessageBox(hDlg, L"Supplier successfully added!", L"Warning!", MB_OK | MB_ICONINFORMATION);
+                        SetWindowText(hEdit1, L"");
+                        SetWindowText(hEdit2, L"");
+                        SetWindowText(hEdit3, L"");
+                        SetWindowText(hEdit4, L"");
+                        SetWindowText(hEdit5, L"");
+                        SetWindowText(hEdit6, L"");
+                        SetWindowText(hEdit7, L"");
+                        SetWindowText(hEdit8, L"");
+                        SetWindowText(hEdit9, L"");
+                        SetFocus(hEdit1);
+                        SendMessage(hList, LB_RESETCONTENT, 0, 0);
+                        supplierRepo->displayAll(hDlg, hList);
+                    }
                 }
             }
             else if (wmId == IDC_BTN_CANCEL_ADDSAPP) {
+                isBtnEdit = false;
                 EndDialog(hDlg, wmId);
                 return (INT_PTR)TRUE;
             }
             else if (wmId == IDOK || wmId == IDCANCEL)
             {
+                isBtnEdit = false;
                 EndDialog(hDlg, wmId);
                 return (INT_PTR)TRUE;
             }
