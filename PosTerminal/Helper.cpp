@@ -46,3 +46,35 @@ TCHAR* Helper::char_tchar(char* text)
     return buff;
 }
 
+bool Helper::validateDouble(std::string text)
+{
+
+    double value;
+    bool result = false;
+
+    try {
+        value = stod(text);
+        result = true;
+    }
+    catch (...) {
+        return result;
+    }
+
+    return result;
+}
+
+bool Helper::validateInt(std::string text)
+{
+    int value;
+    bool result = false;
+
+    try {
+        value = stoi(text);
+        result = true;
+    }
+    catch (...) {
+        return result;
+    }
+
+    return result;
+}
