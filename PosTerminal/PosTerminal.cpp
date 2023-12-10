@@ -544,6 +544,7 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 if (lstrlen(buff1) == 0) {
                     MessageBox(hDlg, L"Search attributes are not specified!", L"Warning!", MB_OK | MB_ICONWARNING);
                     SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
+                    usersRepo->loadData();
                     usersRepo->displayUsers(hDlg, hUsersList);
                     SetFocus(hEdit1);
                 }
