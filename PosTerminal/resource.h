@@ -65,6 +65,7 @@
 #define IDC_EDIT10                      1009
 #define IDC_EDIT_VISA_BALANCE_RP        1009
 #define IDC_COMBO_STATUS_AD_USER        1009
+#define IDC_COMBO_STATUS_AD_USER2       1010
 #define IDC_SLIDER1                     1014
 #define IDC_LIST2                       1015
 #define IDC_LIST_USERS                  1015
@@ -140,6 +141,8 @@
 #define IDC_COMBO_CATEGORY              1072
 #define IDC_EDIT_DESCRIPTION            1073
 #define IDC_BTN_ADDLOCATION             1074
+#define IDC_BTN_SKU2                    1074
+#define IDC_BTN_NEW_CATEGORY            1074
 #define IDC_BTN_SELECT3                 1075
 #define IDC_BTN_EDIT_LOC                1076
 #define IDC_BTN_DEL_LOC                 1077
@@ -271,9 +274,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        149
+#define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1208
+#define _APS_NEXT_CONTROL_VALUE         1200
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

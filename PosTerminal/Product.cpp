@@ -13,37 +13,37 @@ int Product::getID()
 	return id;
 }
 
-std::string Product::getSKU()
+std::string Product::getSKU() const
 {
 	return sku;
 }
 
-std::string Product::getName()
+std::string Product::getName() const
 {
 	return name;
 }
 
-std::string Product::getCategory()
+std::string Product::getCategory() const
 {
 	return category;
 }
 
-double Product::getIn_price()
+double Product::getIn_price() const
 {
 	return in_price;
 }
 
-double Product::getOut_price()
+double Product::getOut_price() const
 {
 	return out_price;
 }
 
-std::string Product::getDescription()
+std::string Product::getDescription() const
 {
 	return description;
 }
 
-int Product::getQuantity()
+int Product::getQuantity() const
 {
 	return quantity;
 }

@@ -2,65 +2,55 @@
 	"products" : 
 	[
 		{
-			"category" : "category2",
-			"description" : "description2",
-			"id" : 1,
-			"in_price" : 10.1,
-			"name" : "Testname2",
-			"out_price" : 111.13,
-			"quantity" : 121,
-			"sku" : "TF8661"
-		},
-		{
 			"category" : "category1",
 			"description" : "description1",
-			"id" : 2,
-			"in_price" : 20.190000000000001,
+			"id" : 1,
+			"in_price" : 10.1,
 			"name" : "Testname1",
-			"out_price" : 222.24000000000001,
-			"quantity" : 2232,
-			"sku" : "TF86622"
+			"out_price" : 10.1,
+			"quantity" : 124,
+			"sku" : "TF865"
 		},
 		{
-			"category" : "category4",
-			"description" : "description4",
-			"id" : 3,
-			"in_price" : 30.300000000000001,
-			"name" : "Testname4",
-			"out_price" : 3333.3499999999999,
-			"quantity" : 44244,
-			"sku" : "TF866333"
+			"category" : "category2",
+			"description" : "description2",
+			"id" : 2,
+			"in_price" : 20.199999999999999,
+			"name" : "Testname2",
+			"out_price" : 20.199999999999999,
+			"quantity" : 222,
+			"sku" : "TF866"
 		},
 		{
 			"category" : "category3",
 			"description" : "description3",
-			"id" : 4,
-			"in_price" : 40.390000000000001,
+			"id" : 3,
+			"in_price" : 30.300000000000001,
 			"name" : "Testname3",
-			"out_price" : 44444.419999999998,
-			"quantity" : 551555,
-			"sku" : "TF8664444"
+			"out_price" : 30.300000000000001,
+			"quantity" : 444,
+			"sku" : "TF867"
+		},
+		{
+			"category" : "category4",
+			"description" : "description4",
+			"id" : 4,
+			"in_price" : 40.399999999999999,
+			"name" : "Testname4",
+			"out_price" : 40.399999999999999,
+			"quantity" : 766,
+			"sku" : "TF868"
 		},
 		{
 			"category" : "placeholder",
-			"description" : "sdfds fsd fds fds",
-			"id" : 6,
-			"in_price" : 4434.0,
-			"name" : "423423",
-			"out_price" : 234423.0,
-			"quantity" : 42243,
-			"sku" : "TF33802"
-		},
-		{
-			"category" : "placeholder",
-			"description" : "SDASD ASD ASDAS DAS",
+			"description" : "desckaewk wek kwe ",
 			"id" : 5,
-			"in_price" : 3123.0,
-			"name" : "editname1",
-			"out_price" : 313.0,
-			"quantity" : 13,
-			"sku" : "TF41742"
+			"in_price" : 31.32,
+			"name" : "Editing new add",
+			"out_price" : 314.0,
+			"quantity" : 211,
+			"sku" : "TF23203"
 		}
 	],
-	"size" : 6
+	"size" : 5
 }

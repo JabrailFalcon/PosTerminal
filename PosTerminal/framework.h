@@ -21,4 +21,3 @@
 #include "Helper.h"
 #include "resource.h"
 #include <iomanip>
-#include <iostream>

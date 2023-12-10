@@ -1,27 +1,35 @@
 {
-  "name": "Users list",
-  "size": 2,
-  "list": [
-    {
-      "id": "U1",
-      "f_name": "Testname1",
-      "l_name": "Testlastname1",
-      "role": "admin",
-      "mobile": "+380552551899",
-      "email": "admin.mail@gmail.com",
-      "status": "on",
-      "password": "0000"
-    },
-    {
-      "id": "U2",
-      "f_name": "Testname2",
-      "l_name": "Testlastname2",
-      "role": "cashier",
-      "mobile": "+380552661800",
-      "email": "cashier.mail@gmail.com",
-      "status": "on",
-      "password": "1111"
-    }
+  "size": 3,
+  "users": [
+      {
+          "id": 1,
+          "f_name": "Maks",
+          "l_name": "Lysenkov",
+          "role": "admin",
+          "mobile": "+380662860358",
+          "email": "NaviOldManTop@gmail.com",
+          "status": "on",
+          "password": "kdfsghlkj33h2gv"
+      },
+      {
+          "id": 2,
+          "f_name": "Misha",
+          "l_name": "Zuravel",
+          "role": "user",
+          "mobile": "+380976492325",
+          "email": "dfsdadjahdjknfl@gmail.com",
+          "status": "on",
+          "password": "sdfsfkj32kjfkjef"
+      },
+      {
+          "id": 3,
+          "f_name": "SomeNamw",
+          "l_name": "SomeSurname",
+          "role": "SomeRole",
+          "mobile": "SomePhone",
+          "email": "SomeEmail",
+          "status": "SomeStatus",
+          "password": "SomePassword"
+      }
   ]
-
 }
