@@ -41,11 +41,48 @@ void SuppliersRepo::loadData()
 
 void SuppliersRepo::saveData()
 {
+	
+	Json::Value data;
+	Json::Reader reader;
+	std::ifstream fin; 
+	fin.open(filePath); 
+	// ->
+	reader.parse(fin, data);
+	fin.close();
 
+	Json::Value nList;
+
+	for (int i = 0; i < supliers.size(); i++) {
+		nList["id"] = supliers[i].getId();
+		nList["company_name"] = supliers[i].getComName();
+		nList["company_mobile"] = supliers[i].getComMob();
+		nList["company_email"] = supliers[i].getComMail();
+		nList["address"] = supliers[i].getAddress();
+		nList["f_name"] = supliers[i].getFname();
+		nList["l_name"] = supliers[i].getLname();
+		nList["mobile"] = supliers[i].getMob();
+		nList["email"] = supliers[i].getMail();
+		nList["jobtitle"] = supliers[i].getJobTitle();
+		nList["goods_resived"] = supliers[i].getGoodsResive();
+		nList["total_coast"] = supliers[i].getTotalCoast();
+		// ->
+
+		data["list"][i] = nList;
+	}
+
+	data["size"] = supliers.size();
+
+	std::ofstream fout; 
+	Json::StyledStreamWriter writer; 
+	
+	fout.open(filePath);
+	writer.write(fout, data); 
+	fout.close(); 
 }
 
-void SuppliersRepo::addSuplier()
+void SuppliersRepo::addSuplier(TCHAR comName[100], TCHAR ComMob[100], TCHAR ComMail[100], TCHAR Address[100], TCHAR Fname[100], TCHAR Lname[100], TCHAR Mob[100], TCHAR Mail[100], TCHAR JobTitle[100])
 {
+	
 }
 
 void SuppliersRepo::delSuplier(int id)
@@ -102,4 +139,9 @@ void SuppliersRepo::displayAll(HWND hDlg, HWND hList) const
 		SendMessage(hList, LB_ADDSTRING, 0, LPARAM(pInfo));
 		delete[] pInfo;
 	}
+}
+
+std::vector<Supplier> SuppliersRepo::getSuppliers()
+{
+	return supliers;
 }
