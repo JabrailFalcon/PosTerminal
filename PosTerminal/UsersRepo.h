@@ -11,6 +11,7 @@ public:
     void saveData();
     void addUser(const User& newUser);
     void editUser();
+    void sort(TCHAR us[100], HWND hDlg, HWND hUsersList) const;
     void deleteUser();
     void clear();
     void displayUsers(HWND hDlg, HWND hUsersList) const;

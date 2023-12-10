@@ -45,6 +45,11 @@ void UsersRepo::addUser(const User& newUser)
 void UsersRepo::editUser()
 {}
 
+void UsersRepo::sort(TCHAR us[100], HWND hDlg, HWND hUsersList) const
+{
+
+}
+
 void UsersRepo::deleteUser()
 {}
 
