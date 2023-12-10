@@ -5,6 +5,7 @@
 #include "PosTerminal.h"
 #include "ProductsRepo.h"
 #include "UsersRepo.h"
+#include "SuppliersRepo.h"
 
 #define MAX_LOADSTRING 100
 
@@ -27,6 +28,8 @@ auto productsRepo = std::make_unique<ProductsRepo>();
 //* Users:
 auto usersRepo = std::make_unique<UsersRepo>();
 
+//* Supliers
+auto supplierRepo = std::make_unique<SuppliersRepo>("Data/Suppliers.json");
 // ------
 
 
@@ -973,23 +976,41 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         hBtnEdit = GetDlgItem(hDlg, IDC_BTN_EDIT_SUP);
         hBtnDel = GetDlgItem(hDlg, IDC_BTN_DEL_SUP);
         hBtnClose = GetDlgItem(hDlg, IDC_BTN_CLOSE_SUP);
+        // ->
+        supplierRepo->loadData();
+        supplierRepo->displayAll(hDlg, hList);
     }
     return (INT_PTR)TRUE;
 
     case WM_COMMAND:
         int wmId = LOWORD(wParam);
-        {
+        {        
+            //-> 
+            TCHAR buff1[100];
+            TCHAR buff2[100];
             if (wmId == IDC_BTN_ADD_SUP) {
-
+                 
             }
             else if (wmId == IDC_BTN_SELECT_SUP) {
-
+                GetWindowText(hEdit1, buff1, 100); 
+                //GetWindowText(hCombo1, buff2, 100); 
+                if (lstrlen(buff1) == 0) { 
+                    MessageBox(hDlg, L"Search attributes are not specified!", L"Warning!", MB_OK | MB_ICONWARNING); 
+                    SendMessage(hList, LB_RESETCONTENT, 0, 0); 
+                    supplierRepo->displayAll(hDlg, hList); 
+                    SetFocus(hEdit1); 
+                }
+                else {
+                    supplierRepo->displayExist(buff1, hDlg, hList); 
+                }
             }
             else if (wmId == IDC_BTN_EDIT_SUP) {
 
             }
             else if (wmId == IDC_BTN_DEL_SUP) {
-
+                // ***!!!!
+                int selIndex = SendMessage(hList, LB_GETCURSEL, 0, 0); 
+                int colItem = SendMessage(hList, LB_DELETESTRING, WPARAM(selIndex), 0); 
             }
             else if (wmId == IDC_BTN_CLOSE_SUP) {
                 EndDialog(hDlg, wmId);
