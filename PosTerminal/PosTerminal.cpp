@@ -22,7 +22,10 @@ bool isAuthorize = true;
 bool isAdmin = true;
 bool continueProcess = true;
 bool isBtnEdit = false;
+//
 bool AddEdit = true;
+//
+// main
 Helper helper;
 //* Products
 auto productsRepo = std::make_unique<ProductsRepo>();
