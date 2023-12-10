@@ -12,7 +12,7 @@ class User
     std::string password;
 public:
     User();
-    User(int id, std::string f_name, std::string l_name, std::string role,
+    User(int id, std::string f_name, std::string l_name, std::string role, 
         std::string mobile, std::string email, std::string status, std::string password);
     int getId();
     std::string getF_name();

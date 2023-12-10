@@ -34,35 +34,7 @@ void UsersRepo::loadData()
 
 void UsersRepo::saveData()
 {
-    Json::Value data;
-    Json::Reader reader;
-    std::ifstream fin;
-    fin.open(filepath);
-    // ->
-    reader.parse(fin, data);
-    fin.close();
-
-    Json::Value list;
-
-    for (int i = 0; i < users.size(); i++) {
-        list["users"][i]["id"].asInt(),
-            list["users"][i]["f_name"].asString(),
-            list["users"][i]["l_name"].asString(),
-            list["users"][i]["role"].asString(),
-            list["users"][i]["mobile"].asString(),
-            list["users"][i]["email"].asString(),
-            list["users"][i]["status"].asString(),
-            list["users"][i]["password"].asString();
-        data["list"][i] = list;
-    }
-    data["size"] = users.size();
-
-    std::ofstream fout;
-    Json::StyledStreamWriter writer;
-
-    fout.open(filepath);
-    writer.write(fout, data);
-    fout.close();
+    
 }
 
 void UsersRepo::addUser(const User& newUser)

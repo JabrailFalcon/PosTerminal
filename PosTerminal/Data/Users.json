@@ -1,114 +1,35 @@
 {
-	"list" : 
-	[
-		{
-			"users" : 
-			[
-				{
-					"email" : null,
-					"f_name" : null,
-					"id" : null,
-					"l_name" : null,
-					"mobile" : null,
-					"password" : null,
-					"role" : null,
-					"status" : null
-				}
-			]
-		},
-		{
-			"users" : 
-			[
-				{
-					"email" : null,
-					"f_name" : null,
-					"id" : null,
-					"l_name" : null,
-					"mobile" : null,
-					"password" : null,
-					"role" : null,
-					"status" : null
-				},
-				{
-					"email" : null,
-					"f_name" : null,
-					"id" : null,
-					"l_name" : null,
-					"mobile" : null,
-					"password" : null,
-					"role" : null,
-					"status" : null
-				}
-			]
-		},
-		{
-			"users" : 
-			[
-				{
-					"email" : null,
-					"f_name" : null,
-					"id" : null,
-					"l_name" : null,
-					"mobile" : null,
-					"password" : null,
-					"role" : null,
-					"status" : null
-				},
-				{
-					"email" : null,
-					"f_name" : null,
-					"id" : null,
-					"l_name" : null,
-					"mobile" : null,
-					"password" : null,
-					"role" : null,
-					"status" : null
-				},
-				{
-					"email" : null,
-					"f_name" : null,
-					"id" : null,
-					"l_name" : null,
-					"mobile" : null,
-					"password" : null,
-					"role" : null,
-					"status" : null
-				}
-			]
-		}
-	],
-	"size" : 3,
-	"users" : 
-	[
-		{
-			"email" : "NaviOldManTop@gmail.com",
-			"f_name" : "Maks",
-			"id" : 1,
-			"l_name" : "Lysenkov",
-			"mobile" : "+380662860358",
-			"password" : "kdfsghlkj33h2gv",
-			"role" : "admin",
-			"status" : "on"
-		},
-		{
-			"email" : "dfsdadjahdjknfl@gmail.com",
-			"f_name" : "Misha",
-			"id" : 2,
-			"l_name" : "Zuravel",
-			"mobile" : "+380976492325",
-			"password" : "sdfsfkj32kjfkjef",
-			"role" : "user",
-			"status" : "on"
-		},
-		{
-			"email" : "SomeEmail",
-			"f_name" : "SomeNamw",
-			"id" : 3,
-			"l_name" : "SomeSurname",
-			"mobile" : "SomePhone",
-			"password" : "SomePassword",
-			"role" : "SomeRole",
-			"status" : "SomeStatus"
-		}
-	]
+  "size": 3,
+  "users": [
+      {
+          "id": 1,
+          "f_name": "Maks",
+          "l_name": "Lysenkov",
+          "role": "admin",
+          "mobile": "+380662860358",
+          "email": "NaviOldManTop@gmail.com",
+          "status": "on",
+          "password": "kdfsghlkj33h2gv"
+      },
+      {
+          "id": 2,
+          "f_name": "Misha",
+          "l_name": "Zuravel",
+          "role": "user",
+          "mobile": "+380976492325",
+          "email": "dfsdadjahdjknfl@gmail.com",
+          "status": "on",
+          "password": "sdfsfkj32kjfkjef"
+      },
+      {
+          "id": 3,
+          "f_name": "SomeNamw",
+          "l_name": "SomeSurname",
+          "role": "SomeRole",
+          "mobile": "SomePhone",
+          "email": "SomeEmail",
+          "status": "SomeStatus",
+          "password": "SomePassword"
+      }
+  ]
 }
