@@ -20,6 +20,7 @@ HWND hDataFrom, hDataTo;
 bool isAuthorize = true;
 bool isAdmin = true;
 bool continueProcess = true;
+bool AddEdit = true;
 Helper helper;
 //* Products
 auto productsRepo = std::make_unique<ProductsRepo>();
@@ -489,6 +490,8 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         const wchar_t* role_opt_2 = L"Client";
         const wchar_t* role_opt_3 = L"Suplier";
 
+        bool AddEdit = true;
+
         // Description
         hBtnAdd = GetDlgItem(hDlg, IDC_BTN_AddUser);
         hBtnSelect = GetDlgItem(hDlg, IDC_BTN_Select2);
@@ -515,7 +518,7 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         // actions:
         usersRepo->loadData();
         usersRepo->displayUsers(hDlg, hUsersList);
-        
+
         // clear:
         usersRepo->clear();
     }
@@ -524,18 +527,39 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         int wmId = LOWORD(wParam);
         {
+            // mine
+            TCHAR buff1[100];
+
             if (wmId == IDC_BTN_AddUser) {
+                AddEdit = true;
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, AddUser);
             }
             else if (wmId == IDC_BTN_Select2) {
-
+                GetWindowText(hEdit1, buff1, 100);
+                if (lstrlen(buff1) == 0) {
+                    MessageBox(hDlg, L"Search attributes are not specified!", L"Warning!", MB_OK | MB_ICONWARNING);
+                    SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
+                    usersRepo->displayUsers(hDlg, hUsersList);
+                    SetFocus(hEdit1);
+                }
+                else {
+                    // . . . 
+                    //usersRepo->sort(buff1, hDlg, hUsersList);
+                }
             }
             else if (wmId == IDC_BTN_Edit2) {
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, EditUser);
-            }
-            else if (wmId == IDC_BTN_Del2) {
+                AddEdit = false;
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, AddUser);
 
             }
+            else if (wmId == IDC_BTN_Del2) {
+                // . . . 
+
+                int selIndex = SendMessage(hUsersList, LB_GETCURSEL, 0, 0);
+                int colItem = SendMessage(hUsersList, LB_DELETESTRING, WPARAM(selIndex), 0);
+
+            }
+
             else if (wmId == IDC_BTN_Close2) {
                 EndDialog(hDlg, wmId);
                 return (INT_PTR)TRUE;
@@ -590,177 +614,188 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     return (INT_PTR)TRUE;
 
     case WM_COMMAND:
-        int wmId = LOWORD(wParam);
-        {
-            if (wmId == IDC_BTN_SAVE_USER) {
+        if (AddEdit == true) {
+            int wmId = LOWORD(wParam);
+            {
+                if (wmId == IDC_BTN_SAVE_USER) {
 
-                // . . .
+                    // . . .
 
-                TCHAR fNameBuff[100], lNameBuff[100], roleBuff[100], mobileBuff[100], emailBuff[100], statusBuff[100], passwordBuff[100];
-                GetWindowText(hEdit1, fNameBuff, 100);
-                GetWindowText(hEdit2, lNameBuff, 100);
-                GetWindowText(hEdit3, mobileBuff, 100);
-                GetWindowText(hCombo1, roleBuff, 100);
-                GetWindowText(hCombo2, statusBuff, 100);
-                GetWindowText(hEdit5, emailBuff, 100);
-                GetWindowText(hEdit5, passwordBuff, 100);
+                    TCHAR fNameBuff[100], lNameBuff[100], roleBuff[100], mobileBuff[100], emailBuff[100], statusBuff[100], passwordBuff[100];
+                    GetWindowText(hEdit1, fNameBuff, 100);
+                    GetWindowText(hEdit2, lNameBuff, 100);
+                    GetWindowText(hEdit3, mobileBuff, 100);
+                    GetWindowText(hCombo1, roleBuff, 100);
+                    GetWindowText(hCombo2, statusBuff, 100);
+                    GetWindowText(hEdit5, emailBuff, 100);
+                    GetWindowText(hEdit6, passwordBuff, 100);
 
-                // Fields
-                if (lstrlen(fNameBuff) == 0 || lstrlen(lNameBuff) == 0 || lstrlen(roleBuff) == 0 ||
-                    lstrlen(mobileBuff) == 0 || lstrlen(emailBuff) == 0 || lstrlen(statusBuff) == 0 || lstrlen(passwordBuff) == 0) {
-                    MessageBox(hDlg, L"All input fields must not be empty!", L"Error", MB_OK | MB_ICONWARNING);
+                    // Fields
+                    if (lstrlen(fNameBuff) == 0) {
+                        MessageBox(hDlg, L"Input first name!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit1);
+                    }
+                    else if (lstrlen(lNameBuff) == 0) {
+                        MessageBox(hDlg, L"Input last name!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit2);
+                    }
+                    else if (lstrlen(mobileBuff) == 0) {
+                        MessageBox(hDlg, L"Input phone number!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit3);
+                    }
+                    else if (lstrlen(roleBuff) == 0) {
+                        MessageBox(hDlg, L"Choose the role!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hCombo1);
+                    }
+                    else if (lstrlen(statusBuff) == 0) {
+                        MessageBox(hDlg, L"Choose the status!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hCombo2);
+                    }
+                    else if (lstrlen(emailBuff) == 0) {
+                        MessageBox(hDlg, L"Input the email!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit5);
+                    }
+                    else if (lstrlen(passwordBuff) == 0) {
+                        MessageBox(hDlg, L"Input the password!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit6);
+                    }
+
+                    else {
+                        //std::vector<User> allUsers = usersRepo->getUsers();
+                        //int newID = allUsers.back().getId() + 1;
+
+                        /*User newUser(newID, fNameBuff, lNameBuff, roleBuff, mobileBuff, emailBuff, statusBuff, passwordBuff);
+                        usersRepo->addUser(newUser);*/
+
+                        SendMessage(hUsersList, LB_ADDSTRING, 0, LPARAM(fNameBuff));
+                        usersRepo->saveData();
+                        EndDialog(hDlg, wmId);
+                        MessageBox(hDlg, L"The user was added successfully!", L"successfully", MB_OK | MB_ICONINFORMATION);
+                        return (INT_PTR)TRUE;
+                    }
+                    // Fin:
+
                 }
-                else {
-                    //std::vector<User> allUsers = usersRepo->getUsers();
-                    //int newID = allUsers.back().getId();
+                else if (wmId == IDC_COMBO_STATUS_AD_USER) {
+                    if (LOWORD(wParam) == CBN_SELENDOK) {
+                        CHAR str_1[255];
+                        int i = SendMessage(hCombo2, CB_GETCURSEL, 0, 0);
+                        SendMessage(hCombo2, CB_GETLBTEXT, i, (LPARAM)str_1);
 
-                    /*User newUser(newID, fNameBuff, lNameBuff, roleBuff, mobileBuff, emailBuff, statusBuff, passwordBuff);
-                    usersRepo->addUser(newUser);*/
-                    
-                    SendMessage(hUsersList, LB_ADDSTRING, 0, LPARAM(roleBuff));
-                    usersRepo->saveData();
+                    }
+                }
+                else if (wmId == IDC_COMBO_ROLE_AD_USER) {
+                    if (LOWORD(wParam) == CBN_SELENDOK) {
+                        CHAR str_1[255];
+                        int i = SendMessage(hCombo1, CB_GETCURSEL, 0, 0);
+                        SendMessage(hCombo1, CB_GETLBTEXT, i, (LPARAM)str_1);
+                    }
+                }
+                else if (wmId == IDC_BTN_CANCEL_USER) {
                     EndDialog(hDlg, wmId);
-                    MessageBox(hDlg, L"The user was added successfully!", L"successfully", MB_OK | MB_ICONINFORMATION);
                     return (INT_PTR)TRUE;
                 }
-                // Fin:
-
-            }
-            else if (wmId == IDC_COMBO_STATUS_AD_USER) {
-                if (LOWORD(wParam) == CBN_SELENDOK) {
-                    CHAR str_1[255];
-                    int i = SendMessage(hCombo2, CB_GETCURSEL, 0, 0);
-                    SendMessage(hCombo2, CB_GETLBTEXT, i, (LPARAM)str_1);
-
+                else if (wmId == IDC_BTN_CLOSE_RP) {
+                    EndDialog(hDlg, wmId);
+                    return (INT_PTR)TRUE;
                 }
-            }
-            else if (wmId == IDC_COMBO_ROLE_AD_USER) {
-                if (LOWORD(wParam) == CBN_SELENDOK) {
-                    CHAR str_1[255];
-                    int i = SendMessage(hCombo1, CB_GETCURSEL, 0, 0);
-                    SendMessage(hCombo1, CB_GETLBTEXT, i, (LPARAM)str_1);
+                else if (wmId == IDOK || wmId == IDCANCEL)
+                {
+                    EndDialog(hDlg, wmId);
+                    return (INT_PTR)TRUE;
                 }
+                break;
             }
-            else if (wmId == IDC_BTN_CANCEL_USER) {
-                EndDialog(hDlg, wmId);
-                return (INT_PTR)TRUE;
-            }
-            else if (wmId == IDC_BTN_CLOSE_RP) {
-                EndDialog(hDlg, wmId);
-                return (INT_PTR)TRUE;
-            }
-            else if (wmId == IDOK || wmId == IDCANCEL)
-            {
-                EndDialog(hDlg, wmId);
-                return (INT_PTR)TRUE;
-            }
-            break;
         }
-    }
-    return (INT_PTR)FALSE;
-}
+        else {
+            int wmId = LOWORD(wParam);
+            {
+                if (wmId == IDC_BTN_SAVE_USER) {
 
-INT_PTR CALLBACK EditUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-    {
-        // . . .
-        const wchar_t* status_opt_1 = L"On";
-        const wchar_t* status_opt_2 = L"Off";
+                    // . . .
 
-        //
-        const wchar_t* role_opt_1 = L"Admin";
-        const wchar_t* role_opt_2 = L"Client";
-        const wchar_t* role_opt_3 = L"Suplier";
+                    TCHAR fNameBuff[100], lNameBuff[100], roleBuff[100], mobileBuff[100], emailBuff[100], statusBuff[100], passwordBuff[100];
+                    GetWindowText(hEdit1, fNameBuff, 100);
+                    GetWindowText(hEdit2, lNameBuff, 100);
+                    GetWindowText(hEdit3, mobileBuff, 100);
+                    GetWindowText(hCombo1, roleBuff, 100);
+                    GetWindowText(hCombo2, statusBuff, 100);
+                    GetWindowText(hEdit5, emailBuff, 100);
+                    GetWindowText(hEdit6, passwordBuff, 100);
 
-        // Description
-        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_FN_USER);
-        hEdit2 = GetDlgItem(hDlg, IDC_EDIT_LN_USER);
-        hEdit3 = GetDlgItem(hDlg, IDC_EDIT_MOB_USER);
-        hCombo1 = GetDlgItem(hDlg, IDC_COMBO_ROLE_AD_USER);
-        hCombo2 = GetDlgItem(hDlg, IDC_COMBO_STATUS_AD_USER);
-        hEdit5 = GetDlgItem(hDlg, IDC_EDIT_MAIL_AD_USER);
-        hEdit6 = GetDlgItem(hDlg, IDC_EDIT_PASS_USER);
-        hBtnAdd = GetDlgItem(hDlg, IDC_BTN_ADD3);
-        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CANCEL3);
+                    // Fields
+                    if (lstrlen(fNameBuff) == 0) {
+                        MessageBox(hDlg, L"Input first name!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit1);
+                    }
+                    else if (lstrlen(lNameBuff) == 0) {
+                        MessageBox(hDlg, L"Input last name!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit2);
+                    }
+                    else if (lstrlen(mobileBuff) == 0) {
+                        MessageBox(hDlg, L"Input phone number!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit3);
+                    }
+                    else if (lstrlen(roleBuff) == 0) {
+                        MessageBox(hDlg, L"Choose the role!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hCombo1);
+                    }
+                    else if (lstrlen(statusBuff) == 0) {
+                        MessageBox(hDlg, L"Choose the status!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hCombo2);
+                    }
+                    else if (lstrlen(emailBuff) == 0) {
+                        MessageBox(hDlg, L"Input the email!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit5);
+                    }
+                    else if (lstrlen(passwordBuff) == 0) {
+                        MessageBox(hDlg, L"Input the password!", L"Empty field", MB_OK | MB_ICONWARNING);
+                        SetFocus(hEdit6);
+                    }
+                    else {
+                        //std::vector<User> allUsers = usersRepo->getUsers();
+                        //int newID = allUsers.back().getId() + 1;
 
-        // Status CB:
-        SendMessage(hCombo2, CB_ADDSTRING, 0, (LPARAM)status_opt_1);
-        SendMessage(hCombo2, CB_ADDSTRING, 0, (LPARAM)status_opt_2);
+                        /*User newUser(newID, fNameBuff, lNameBuff, roleBuff, mobileBuff, emailBuff, statusBuff, passwordBuff);
+                        usersRepo->addUser(newUser);*/
 
-        // Role CB:
-        SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)role_opt_1);
-        SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)role_opt_2);
-        SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)role_opt_3);
-    }
-    return (INT_PTR)TRUE;
-
-    case WM_COMMAND:
-        int wmId = LOWORD(wParam);
-        {
-            if (wmId == IDC_BTN_SAVE_USER) {
-
-                // . . .
-
-                TCHAR fNameBuff[100], lNameBuff[100], roleBuff[100], mobileBuff[100], emailBuff[100], statusBuff[100], passwordBuff[100];
-                GetWindowText(hEdit1, fNameBuff, 100);
-                GetWindowText(hEdit2, lNameBuff, 100);
-                GetWindowText(hEdit3, mobileBuff, 100);
-                GetWindowText(hCombo1, roleBuff, 100);
-                GetWindowText(hCombo2, statusBuff, 100);
-                GetWindowText(hEdit5, emailBuff, 100);
-                GetWindowText(hEdit5, passwordBuff, 100);
-
-                // Fields
-                if (lstrlen(fNameBuff) == 0 || lstrlen(lNameBuff) == 0 || lstrlen(roleBuff) == 0 ||
-                    lstrlen(mobileBuff) == 0 || lstrlen(emailBuff) == 0 || lstrlen(statusBuff) == 0 || lstrlen(passwordBuff) == 0) {
-                    MessageBox(hDlg, L"All input fields must not be empty!", L"Error", MB_OK | MB_ICONWARNING);
+                        SendMessage(hUsersList, LB_ADDSTRING, 0, LPARAM(emailBuff));
+                        usersRepo->saveData();
+                        EndDialog(hDlg, wmId);
+                        MessageBox(hDlg, L"The user was edited successfully!", L"successfully", MB_OK | MB_ICONINFORMATION);
+                        return (INT_PTR)TRUE;
+                    }
                 }
-                else {
-                    //
-                    std::vector<User> allUsers = usersRepo->getUsers();
-                    int newID = allUsers.back().getId() + 1;
+                else if (wmId == IDC_COMBO_STATUS_AD_USER) {
+                    if (LOWORD(wParam) == CBN_SELENDOK) {
+                        CHAR str_1[255];
+                        int i = SendMessage(hCombo2, CB_GETCURSEL, 0, 0);
+                        SendMessage(hCombo2, CB_GETLBTEXT, i, (LPARAM)str_1);
 
-                    //
-                    usersRepo->saveData();
+                    }
+                }
+                else if (wmId == IDC_COMBO_ROLE_AD_USER) {
+                    if (LOWORD(wParam) == CBN_SELENDOK) {
+                        CHAR str_1[255];
+                        int i = SendMessage(hCombo1, CB_GETCURSEL, 0, 0);
+                        SendMessage(hCombo1, CB_GETLBTEXT, i, (LPARAM)str_1);
+                    }
+                }
+                else if (wmId == IDC_BTN_CANCEL_USER) {
                     EndDialog(hDlg, wmId);
-                    MessageBox(hDlg, L"The user was edit successfully!", L"successfully", MB_OK | MB_ICONINFORMATION);
                     return (INT_PTR)TRUE;
                 }
-
-            }
-            else if (wmId == IDC_COMBO_STATUS_AD_USER) {
-                if (LOWORD(wParam) == CBN_SELENDOK) {
-                    CHAR str_1[255];
-                    int i = SendMessage(hCombo2, CB_GETCURSEL, 0, 0);
-                    SendMessage(hCombo2, CB_GETLBTEXT, i, (LPARAM)str_1);
-
+                else if (wmId == IDC_BTN_CLOSE_RP) {
+                    EndDialog(hDlg, wmId);
+                    return (INT_PTR)TRUE;
                 }
-            }
-            else if (wmId == IDC_COMBO_ROLE_AD_USER) {
-                if (LOWORD(wParam) == CBN_SELENDOK) {
-                    CHAR str_1[255];
-                    int i = SendMessage(hCombo1, CB_GETCURSEL, 0, 0);
-                    SendMessage(hCombo1, CB_GETLBTEXT, i, (LPARAM)str_1);
+                else if (wmId == IDOK || wmId == IDCANCEL)
+                {
+                    EndDialog(hDlg, wmId);
+                    return (INT_PTR)TRUE;
                 }
+                break;
             }
-            else if (wmId == IDC_BTN_CANCEL_USER) {
-                EndDialog(hDlg, wmId);
-                return (INT_PTR)TRUE;
-            }
-            else if (wmId == IDC_BTN_CLOSE_RP) {
-                EndDialog(hDlg, wmId);
-                return (INT_PTR)TRUE;
-            }
-            else if (wmId == IDOK || wmId == IDCANCEL)
-            {
-                EndDialog(hDlg, wmId);
-                return (INT_PTR)TRUE;
-            }
-            break;
         }
     }
     return (INT_PTR)FALSE;
