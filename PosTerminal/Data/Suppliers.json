@@ -1,9 +1,8 @@
 {
-  "name": "Suppliers list",
-  "size": 1,
+  "size": 3,
   "list": [
     {
-      "id": "S1",
+      "id": 1,
       "company_name": "TestSuppliersname1",
       "company_mobile": "+380980033343",
       "company_email": "suppliers.mail@gmail.com",
@@ -12,7 +11,37 @@
       "l_name": "Testlastname1",
       "mobile": "+380552551899",
       "email": "manager.mail@gmail.com",
-      "jobtitle": "Manager"
+      "jobtitle": "Manager",
+      "goods_resived": 0,
+      "total_coast": 0.0
+    },
+    {
+      "id": 2,
+      "company_name": "TestSuppliersname2",
+      "company_mobile": "0930000003",
+      "company_email": "suppliers2.mail@gmail.com",
+      "address": "suppliers adress2",
+      "f_name": "Testname2",
+      "l_name": "Testlastname2",
+      "mobile": "+380552551899",
+      "email": "manager2.mail@gmail.com",
+      "jobtitle": "Manager2",
+      "goods_resived": 0,
+      "total_coast": 0.0
+    },
+    {
+      "id": 3,
+      "company_name": "Sup",
+      "company_mobile": "0930000003",
+      "company_email": "sup.mail@gmail.com",
+      "address": "suppliers adress2",
+      "f_name": "Testname2",
+      "l_name": "Testlastname2",
+      "mobile": "+380552551899",
+      "email": "manager2.mail@gmail.com",
+      "jobtitle": "Manager2",
+      "goods_resived": 0,
+      "total_coast": 0.0
     }
   ]
 
