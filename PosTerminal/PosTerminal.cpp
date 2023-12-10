@@ -56,6 +56,7 @@ INT_PTR CALLBACK    AddLocation(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Pricing(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Clients(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Supliers(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    AddSuplier(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Report(HWND, UINT, WPARAM, LPARAM);
 
 // 1
@@ -987,9 +988,9 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         {        
             //-> 
             TCHAR buff1[100];
-            TCHAR buff2[100];
+            //TCHAR buff2[100];
             if (wmId == IDC_BTN_ADD_SUP) {
-                 
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG9), hDlg, AddSuplier); 
             }
             else if (wmId == IDC_BTN_SELECT_SUP) {
                 GetWindowText(hEdit1, buff1, 100); 
@@ -1005,12 +1006,15 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 }
             }
             else if (wmId == IDC_BTN_EDIT_SUP) {
-
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG9), hDlg, AddSuplier);
+                supplierRepo->saveData();
             }
             else if (wmId == IDC_BTN_DEL_SUP) {
                 // ***!!!!
                 int selIndex = SendMessage(hList, LB_GETCURSEL, 0, 0); 
                 int colItem = SendMessage(hList, LB_DELETESTRING, WPARAM(selIndex), 0); 
+                //....
+                supplierRepo->saveData();
             }
             else if (wmId == IDC_BTN_CLOSE_SUP) {
                 EndDialog(hDlg, wmId);
@@ -1026,6 +1030,116 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
+INT_PTR CALLBACK AddSuplier(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+    {
+        // Description 
+
+        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_COMNAME_SUPPL); 
+        hEdit2 = GetDlgItem(hDlg, IDC_EDIT_MAILCOM_SAPP);
+        hEdit3 = GetDlgItem(hDlg, IDC_EDIT_MOBCOMNUM_SUPP);
+        hEdit4 = GetDlgItem(hDlg, IDC_EDIT_ADRESSCOM_SAPP);
+        hEdit5 = GetDlgItem(hDlg, IDC_EDIT_FN_SAPP);
+        hEdit6 = GetDlgItem(hDlg, IDC_EDIT_LN_SAPP);
+        hEdit7 = GetDlgItem(hDlg, IDC_EDIT_MOB_SAPP);
+        hEdit8 = GetDlgItem(hDlg, IDC_EDIT_MAIL_SAPP);
+        hEdit9 = GetDlgItem(hDlg, IDC_EDIT_JT_SAPP);
+        hBtnSave = GetDlgItem(hDlg, IDC_BTN_SAVE_ADDSAPP);
+        hBtnClose = GetDlgItem(hDlg, IDC_BTN_CANCEL_ADDSAPP);
+    }
+    return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        int wmId = LOWORD(wParam);
+        {
+            TCHAR buff1[100];
+            TCHAR buff2[100];
+            TCHAR buff3[100];
+            TCHAR buff4[100];
+            TCHAR buff5[100];
+            TCHAR buff6[100];
+            TCHAR buff7[100];
+            TCHAR buff8[100];
+            TCHAR buff9[100];
+            if (wmId == IDC_BTN_SAVE_ADDSAPP) {
+                GetWindowText(hEdit1, buff1, 100);
+                GetWindowText(hEdit2, buff2, 100);
+                GetWindowText(hEdit3, buff3, 100);
+                GetWindowText(hEdit4, buff4, 100);
+                GetWindowText(hEdit5, buff5, 100);
+                GetWindowText(hEdit6, buff6, 100);
+                GetWindowText(hEdit7, buff7, 100);
+                GetWindowText(hEdit8, buff8, 100);
+                GetWindowText(hEdit9, buff9, 100);
+                if (lstrlen(buff1) == 0) {
+                    MessageBox(hDlg, L"Input company name!", L"Warning!", MB_OK | MB_ICONWARNING);
+                   
+                    SetFocus(hEdit1);
+                }
+                else if (lstrlen(buff2) == 0) {
+                    MessageBox(hDlg, L"Input company mail!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit2);
+                }
+                else if (lstrlen(buff3) == 0) {
+                    MessageBox(hDlg, L"Input company contact number!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit3);
+                }
+                else if (lstrlen(buff4) == 0) {
+                    MessageBox(hDlg, L"Input company adress!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit4);
+                }
+                else if (lstrlen(buff5) == 0) {
+                    MessageBox(hDlg, L"Input contact person name!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit5);
+                }
+                else if (lstrlen(buff6) == 0) {
+                    MessageBox(hDlg, L"Input contact person last name!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit6);
+                }
+                else if (lstrlen(buff7) == 0) {
+                    MessageBox(hDlg, L"Input contact person mobile number!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit7);
+                }
+                else if (lstrlen(buff8) == 0) {
+                    MessageBox(hDlg, L"Input contact person mail!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit8);
+                }
+                else if (lstrlen(buff9) == 0) {
+                    MessageBox(hDlg, L"Input job title!", L"Warning!", MB_OK | MB_ICONWARNING);
+
+                    SetFocus(hEdit9);
+                }
+                else {
+                    //supplierRepo->addSuplier();
+                }
+            }
+            else if (wmId == IDC_BTN_CANCEL_ADDSAPP) {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            else if (wmId == IDOK || wmId == IDCANCEL)
+            {
+                EndDialog(hDlg, wmId);
+                return (INT_PTR)TRUE;
+            }
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
 
 // 13 ----------------- Report ---------------------
 INT_PTR CALLBACK Report(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
