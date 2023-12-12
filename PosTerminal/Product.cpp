@@ -8,42 +8,42 @@ Product::Product(int id, std::string sku, std::string name, std::string category
 	: id(id), sku(sku), name(name), category(category), in_price(in_price), out_price(out_price), description(description), quantity(quantity)
 {}
 
-int Product::getID()
+int Product::getID() const
 {
 	return id;
 }
 
-std::string Product::getSKU()
+std::string Product::getSKU() const
 {
 	return sku;
 }
 
-std::string Product::getName()
+std::string Product::getName() const
 {
 	return name;
 }
 
-std::string Product::getCategory()
+std::string Product::getCategory() const
 {
 	return category;
 }
 
-double Product::getIn_price()
+double Product::getIn_price() const
 {
 	return in_price;
 }
 
-double Product::getOut_price()
+double Product::getOut_price() const
 {
 	return out_price;
 }
 
-std::string Product::getDescription()
+std::string Product::getDescription() const
 {
 	return description;
 }
 
-int Product::getQuantity()
+int Product::getQuantity() const
 {
 	return quantity;
 }
