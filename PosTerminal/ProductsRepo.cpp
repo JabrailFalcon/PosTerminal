@@ -65,19 +65,19 @@ void ProductsRepo::displayAllProducts(HWND& hDlg, HWND& hProductsList) const
 {
 	Helper helper;
 	int i = 1;
-	//for (auto& p : products) {
-		//std::stringstream ss;
-		//ss << std::left << std::setw(10) << i++
-			//<< std::setw(10) << p.getSKU()
-			//<< std::setw(50) << p.getName()
-			//<< std::setw(45) << p.getCategory()
-			//<< std::setw(15) << p.getQuantity()
-			//<< std::setw(15) << p.getOut_price();
-		//std::string product = ss.str();
-		//TCHAR* pInfo = helper.string_tchar(product);
-		//SendMessage(hProductsList, LB_ADDSTRING, 0, LPARAM(pInfo));
-	//	delete[] pInfo;
-	//}
+	for (auto& p : products) {
+		std::stringstream ss;
+		ss << std::left << std::setw(10) << i++
+			<< std::setw(10) << p.getSKU()
+			<< std::setw(50) << p.getName()
+			<< std::setw(45) << p.getCategory()
+			<< std::setw(15) << p.getQuantity()
+			<< std::setw(15) << p.getOut_price();
+		std::string product = ss.str();
+		TCHAR* pInfo = helper.string_tchar(product);
+		SendMessage(hProductsList, LB_ADDSTRING, 0, LPARAM(pInfo));
+		delete[] pInfo;
+	}
 }
 
 void ProductsRepo::addProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditProductName, HWND& hEditProductDesc,

@@ -9,8 +9,7 @@ public:
 	ProductsRepo();
 	void loadData();
 	void saveData();
-	//void displayAllProducts(HWND hDlg, HWND hProductsList) const;
-	//std::vector<Product> getProducts() const;
+
 	void displayAllProducts(HWND& hDlg, HWND& hProductsList) const;
 	void addProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditProductName, HWND& hEditProductDesc,
 		HWND& hEditProductInprice, HWND& hEditProductOutprice, HWND& hEditProductQuantity, int index);

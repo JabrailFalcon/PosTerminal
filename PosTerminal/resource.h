@@ -48,6 +48,7 @@
 #define IDC_EDIT3                       1005
 #define IDC_BTN_CLOSE_MOV               1005
 #define IDC_EDIT_LN_SAPP                1005
+#define IDC_EDIT_PRODQUANTITY           1005
 #define IDC_BUTTON7                     1006
 #define IDC_COMBO2                      1006
 #define IDC_EDIT4                       1006
@@ -263,6 +264,8 @@
 #define IDC_EDIT_COMNAME_SUPPL          1194
 #define IDC_EDIT_FN_SAPP                1195
 #define IDC_LIST_PRODUCTS               1196
+#define IDC_EDIT_INPRICE                1198
+#define IDC_EDIT_OUTPRICE               1199
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -272,7 +275,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1198
+#define _APS_NEXT_CONTROL_VALUE         1200
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

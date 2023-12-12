@@ -461,9 +461,9 @@ INT_PTR CALLBACK AddProduct(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
         hEditProductSKU = GetDlgItem(hDlg, IDC_EDIT_SKU);
         hEditProductName = GetDlgItem(hDlg, IDC_EDIT_PRODNAME);
         hEditProductDesc = GetDlgItem(hDlg, IDC_EDIT_DESCRIPTION);
-        //hEditProductInprice = GetDlgItem(hDlg, IDC_EDIT_INPRICE);
-        //hEditProductOutprice = GetDlgItem(hDlg, IDC_EDIT_OUTPRICE);
-        //hEditProductQuantity = GetDlgItem(hDlg, IDC_EDIT_PRODQUANTITY);
+        hEditProductInprice = GetDlgItem(hDlg, IDC_EDIT_INPRICE);
+        hEditProductOutprice = GetDlgItem(hDlg, IDC_EDIT_OUTPRICE);
+        hEditProductQuantity = GetDlgItem(hDlg, IDC_EDIT_PRODQUANTITY);
         //
         hCombo1 = GetDlgItem(hDlg, IDC_COMBO_CATEGORY);
         hBtnGenerate = GetDlgItem(hDlg, IDC_BTN_SKU);
@@ -477,6 +477,9 @@ INT_PTR CALLBACK AddProduct(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
         }
         else {
             SetWindowText(hDlg, L"Add new product");
+            SetWindowText(hEditProductInprice, L"0");
+            SetWindowText(hEditProductOutprice, L"0");
+            SetWindowText(hEditProductQuantity, L"0");
             SetWindowText(hBtnAdd, L"Create");
         }
     }
@@ -489,7 +492,7 @@ INT_PTR CALLBACK AddProduct(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                 productsRepo->generateSKU(hEditProductSKU);
             }
             else if (wmId == IDC_BTN_ADD3) {
-                //productsRepo->addProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, hEditProductOutprice, hEditProductQuantity, ProductIndex);
+                productsRepo->addProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, hEditProductOutprice, hEditProductQuantity, ProductIndex);
                 ProductIndex = -1;
                 EndDialog(hDlg, wmId);
             }
