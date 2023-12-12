@@ -16,6 +16,8 @@ HWND hBtnAdd, hBtnDel, hBtnPay, hBtnSelect, hBtnEdit, hBtnCategory, hBtnGenerate
 HWND hCombo1, hCombo2, hCombo3;
 HWND hList, hProductsList, hUsersList;
 HWND hDataFrom, hDataTo;
+//* Products
+HWND hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, hEditProductOutprice, hEditProductQuantity; 
 
 //* GLOBAL Variers:
 bool isAuthorize = true;
@@ -29,6 +31,7 @@ bool AddEdit = true;
 Helper helper;
 //* Products
 auto productsRepo = std::make_unique<ProductsRepo>();
+int ProductIndex = -1;
 
 //* Users:
 auto usersRepo = std::make_unique<UsersRepo>();
@@ -52,7 +55,7 @@ INT_PTR CALLBACK    Authorization(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    MainWindow(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Terminal(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Products(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    AddProduc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    AddProduct(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Users(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    AddUser(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    EditUser(HWND, UINT, WPARAM, LPARAM);
@@ -377,7 +380,7 @@ INT_PTR CALLBACK Terminal(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // 8 -----------------  Products  ----------------------
-INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 {
     UNREFERENCED_PARAMETER(lParam);
     switch (message)
@@ -385,7 +388,7 @@ INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_INITDIALOG:
     {
         // Description
-        hBtnCategory = GetDlgItem(hDlg, IDC_BTN_Category);
+        hBtnCategory = GetDlgItem(hDlg, IDC_BTN_Category); 
         hBtnAdd = GetDlgItem(hDlg, IDC_BTN_AddProdact1);
         hBtnSelect = GetDlgItem(hDlg, IDC_BTN_Select);
         hBtnEdit = GetDlgItem(hDlg, IDC_BTN_EditP);
@@ -395,36 +398,44 @@ INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         hProductsList = GetDlgItem(hDlg, IDC_LIST_PRODUCTS);
 
         // Load Data
-        productsRepo->loadData();
-        productsRepo->displayAllProducts(hDlg, hProductsList);
-        /*std::vector<Product> buff = productsRepo->getProducts();
-        for (auto& p : buff) {
-            TCHAR* pInfo = helper.string_tchar(p.getSKU());
-            SendMessage(hProductsList, LB_ADDSTRING, 0, LPARAM(pInfo));
-            delete[] pInfo;
-        }*/
+       productsRepo->loadData();
+       productsRepo->displayAllProducts(hDlg, hProductsList); 
+
     }
     return (INT_PTR)TRUE;
 
     case WM_COMMAND:
         int wmId = LOWORD(wParam);
         {
-            if (wmId == IDC_BTN_Category) {
+           if (wmId == IDC_BTN_Category) {
 
             }
-            else if (wmId == IDC_BTN_AddProdact1) {
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG2), hDlg, AddProduc);
+           else if (wmId == IDC_BTN_AddProdact1) {
+                ProductIndex = -1; 
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG2), hDlg, AddProduct); 
+                SendMessage(hProductsList, LB_RESETCONTENT, 0, 0);
+                productsRepo->displayAllProducts(hDlg, hProductsList); 
             }
             else if (wmId == IDC_BTN_Select) {
 
             }
             else if (wmId == IDC_BTN_EditP) {
-
+                ProductIndex = SendMessage(hProductsList, LB_GETCURSEL, 0, 0);
+                if (ProductIndex >= 0) { 
+                    DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG2), hDlg, AddProduct); 
+                    SendMessage(hProductsList, LB_RESETCONTENT, 0, 0);
+                    productsRepo->displayAllProducts(hDlg, hProductsList);
+                }
+                else {
+                    MessageBox(hDlg, L"Select product in the list to edit it!", L"Warning", MB_OK || MB_ICONWARNING);
+                }
             }
-            else if (wmId == IDC_BTN_DelP) {
-
+           else if (wmId == IDC_BTN_DelP) {
+                productsRepo->deleteProduct(hDlg, hProductsList);
+               SendMessage(hProductsList, LB_RESETCONTENT, 0, 0);
+                productsRepo->displayAllProducts(hDlg, hProductsList);
             }
-            else if (wmId == IDC_BTN_CloseP) {
+             else if (wmId == IDC_BTN_CloseP) {
                 EndDialog(hDlg, wmId);
                 return (INT_PTR)TRUE;
             }
@@ -439,7 +450,7 @@ INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     return (INT_PTR)FALSE;
 }
 
-INT_PTR CALLBACK AddProduc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK AddProduct(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);
     switch (message)
@@ -447,13 +458,27 @@ INT_PTR CALLBACK AddProduc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
     case WM_INITDIALOG:
     {
         // Description
-        hEdit1 = GetDlgItem(hDlg, IDC_EDIT_SKU);
-        hEdit2 = GetDlgItem(hDlg, IDC_EDIT_PRODNAME);
-        hEdit2 = GetDlgItem(hDlg, IDC_EDIT_DESCRIPTION);
+        hEditProductSKU = GetDlgItem(hDlg, IDC_EDIT_SKU);
+        hEditProductName = GetDlgItem(hDlg, IDC_EDIT_PRODNAME);
+        hEditProductDesc = GetDlgItem(hDlg, IDC_EDIT_DESCRIPTION);
+        //hEditProductInprice = GetDlgItem(hDlg, IDC_EDIT_INPRICE);
+        //hEditProductOutprice = GetDlgItem(hDlg, IDC_EDIT_OUTPRICE);
+        //hEditProductQuantity = GetDlgItem(hDlg, IDC_EDIT_PRODQUANTITY);
+        //
         hCombo1 = GetDlgItem(hDlg, IDC_COMBO_CATEGORY);
         hBtnGenerate = GetDlgItem(hDlg, IDC_BTN_SKU);
         hBtnAdd = GetDlgItem(hDlg, IDC_BTN_ADD3);
         hBtnClose = GetDlgItem(hDlg, IDC_BTN_CANCEL3);
+
+        if (ProductIndex >= 0) {
+            SetWindowText(hDlg, L"Edit product");
+            SetWindowText(hBtnAdd, L"Edit");
+            productsRepo->fillEditWindow(ProductIndex, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, hEditProductOutprice, hEditProductQuantity);
+        }
+        else {
+            SetWindowText(hDlg, L"Add new product");
+            SetWindowText(hBtnAdd, L"Create");
+        }
     }
     return (INT_PTR)TRUE;
 
@@ -461,10 +486,12 @@ INT_PTR CALLBACK AddProduc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
         int wmId = LOWORD(wParam);
         {
             if (wmId == IDC_BTN_SKU) {
-
+                productsRepo->generateSKU(hEditProductSKU);
             }
             else if (wmId == IDC_BTN_ADD3) {
-
+                //productsRepo->addProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, hEditProductOutprice, hEditProductQuantity, ProductIndex);
+                ProductIndex = -1;
+                EndDialog(hDlg, wmId);
             }
             else if (wmId == IDC_BTN_CANCEL3) {
                 EndDialog(hDlg, wmId);
