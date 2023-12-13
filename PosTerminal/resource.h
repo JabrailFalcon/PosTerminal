@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by PosTerminal.rc
+// Включаемый файл, созданный в Microsoft Visual C++.
+// Используется PosTerminal.rc
 //
 #define IDC_MYICON                      2
 #define IDD_POSTERMINAL_DIALOG          102
@@ -136,6 +136,8 @@
 #define IDC_BTN_Select2                 1065
 #define IDC_BTN_AddUser                 1066
 #define IDC_BTN_SKU                     1067
+#define IDC_BTN_Select3                 1067
+#define IDC_BTN_RESET_USERS_SORT        1067
 #define IDC_BTN_ADD3                    1068
 #define IDC_BTN_CANCEL3                 1069
 #define IDC_EDIT_SKU                    1070
@@ -249,6 +251,7 @@
 #define IDC_COMBO_ROLE_USER             1178
 #define IDC_COMBO_STATUS_USER           1179
 #define IDC_BTN_SAVE_USER               1180
+#define IDC_COMBO_SORT_BY_USER          1180
 #define IDC_BTN_CANCEL_USER             1181
 #define IDC_EDIT_FN_USER                1182
 #define IDC_EDIT_LN_USER                1183
@@ -267,6 +270,9 @@
 #define IDC_LIST_PRODUCTS               1196
 #define IDC_EDIT_INPRICE                1198
 #define IDC_EDIT_OUTPRICE               1199
+#define IDC_STATIC_SORT_BY_USERS        1200
+#define IDC_BTN_Select3                 1201
+#define IDC_BTN_SELECT3                 1202
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -276,7 +282,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        148
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1200
+#define _APS_NEXT_CONTROL_VALUE         1203
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
