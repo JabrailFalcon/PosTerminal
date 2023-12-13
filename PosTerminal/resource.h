@@ -34,6 +34,7 @@
 #define IDC_BUTTON1                     1000
 #define IDC_BTN_SAVE_SAPP               1000
 #define IDC_BTN_SAVE_ADDSAPP            1000
+#define IDC_BTN_RESET                   1000
 #define IDC_BUTTON2                     1001
 #define IDC_BTN_CANCEL_ADDSAPP          1001
 #define IDC_BUTTON3                     1002
