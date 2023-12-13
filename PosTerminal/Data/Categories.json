@@ -1,0 +1,18 @@
+{
+	"categories" : 
+	[
+		{
+			"category" : "category1"
+		},
+		{
+			"category" : "category2"
+		},
+		{
+			"category" : "category3"
+		},
+		{
+			"category" : "category4"
+		}
+	],
+	"size" : 4
+}

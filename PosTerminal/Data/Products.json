@@ -1,45 +1,46 @@
 {
-  "size": 4,
-  "products": [
-    {
-      "id": 1,
-      "sku": "TF865",
-      "name": "Testname1",
-      "category": "category1",
-      "in_price": 10.10,
-      "out_price": 10.10,
-      "description": "description1",
-      "quantity" :  124
-    },
-    {
-      "id": 2,
-      "sku": "TF866",
-      "name": "Testname2",
-      "category": "category2",
-      "in_price": 20.20,
-      "out_price": 20.20,
-      "description": "description2",
-      "quantity": 222
-    },
-    {
-      "id": 3,
-      "sku": "TF867",
-      "name": "Testname3",
-      "category": "category3",
-      "in_price": 30.30,
-      "out_price": 30.30,
-      "description": "description3",
-      "quantity": 444
-    },
-    {
-      "id": 4,
-      "sku": "TF868",
-      "name": "Testname4",
-      "category": "category4",
-      "in_price": 40.40,
-      "out_price": 40.40,
-      "description": "description4",
-      "quantity": 766
-    }
-  ]
+	"products" : 
+	[
+		{
+			"category" : "category1",
+			"description" : "description1",
+			"id" : 1,
+			"in_price" : 10.1,
+			"name" : "Testname1",
+			"out_price" : 10.1,
+			"quantity" : 124,
+			"sku" : "TF865"
+		},
+		{
+			"category" : "category2",
+			"description" : "description2",
+			"id" : 2,
+			"in_price" : 20.199999999999999,
+			"name" : "Testname2",
+			"out_price" : 20.199999999999999,
+			"quantity" : 222,
+			"sku" : "TF866"
+		},
+		{
+			"category" : "category3",
+			"description" : "description3",
+			"id" : 3,
+			"in_price" : 30.300000000000001,
+			"name" : "Testname3",
+			"out_price" : 30.300000000000001,
+			"quantity" : 444,
+			"sku" : "TF867"
+		},
+		{
+			"category" : "category4",
+			"description" : "description4",
+			"id" : 4,
+			"in_price" : 40.399999999999999,
+			"name" : "Testname4",
+			"out_price" : 40.399999999999999,
+			"quantity" : 766,
+			"sku" : "TF868"
+		}
+	],
+	"size" : 4
 }
