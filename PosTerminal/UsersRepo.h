@@ -15,5 +15,6 @@ public:
     void deleteUser();
     void clear();
     void displayUsers(HWND hDlg, HWND hUsersList) const;
+    bool authenticate(TCHAR login[100], TCHAR pass[100]);
     std::vector<User> getUsers() const;
 };

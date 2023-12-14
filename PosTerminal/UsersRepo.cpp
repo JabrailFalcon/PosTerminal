@@ -74,6 +74,22 @@ void UsersRepo::displayUsers(HWND hDlg, HWND hUsersList) const
     }
 }
 
+bool UsersRepo::authenticate(TCHAR login[100], TCHAR pass[100])
+{
+    Helper helper;
+    std::string loginBuff = helper.tchar_string(login);
+    std::string passBuff = helper.tchar_string(pass);
+    // ->
+    auto iter = std::find_if(users.begin(), users.end(),
+        [loginBuff, passBuff](User& user) {
+            return ((user.getF_name() == loginBuff || user.getEmail() == loginBuff || user.getMobile() == loginBuff) && (user.getPassword() == passBuff));
+        });
+    // ->
+    bool result = (iter != users.end());
+    // ->
+    return result;
+}
+
 std::vector<User> UsersRepo::getUsers() const
 {
     return users;
