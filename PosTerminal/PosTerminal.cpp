@@ -567,6 +567,7 @@ INT_PTR CALLBACK AddCategory(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
                 categoriesRepo->comboCategories(hComboProdCategoriesAdd);
                 int index = categoriesRepo->categoriesSize() - 1;
                 SendMessage(hComboProdCategoriesAdd, CB_SETCURSEL, index, 0);
+
                 EndDialog(hDlg, wmId);
             }
             else if (wmId == IDOK || wmId == IDCANCEL)
