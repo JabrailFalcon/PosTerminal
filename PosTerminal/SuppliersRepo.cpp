@@ -256,7 +256,7 @@ void SuppliersRepo::displayExist(TCHAR sup[100], HWND hDlg, HWND hList)
 					std::string suplier = std::to_string(n++) + "                  " + s.getComName() + "                                                                                                        " 
 						+ std::to_string(s.getGoodsResive()) + "                  " + std::to_string(s.getTotalCoast()); 
 					TCHAR* pInfo = helper.string_tchar(suplier); 
-					SendMessage(hList, LB_ADDSTRING, 0, LPARAM(pInfo));					
+					SendMessage(hList, LB_ADDSTRING, 0, LPARAM(pInfo));				
 					fout << s.getId() << std::endl;
 				}
 			});
@@ -303,6 +303,7 @@ void SuppliersRepo::comboSort(HWND hDlg, HWND hCombo1)
 	SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)_T("By goods recived"));
 	SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)_T("By total cost"));
 }
+
 void SuppliersRepo::sortByName(HWND hDlg, HWND hList)
 {
 	Helper helper;

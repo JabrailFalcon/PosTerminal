@@ -19,7 +19,7 @@
 			"address" : "serhttrsh",
 			"company_email" : "MAil",
 			"company_mobile" : "sdgaas",
-			"company_name" : "TestSuppliersname2",
+			"company_name" : "TestSuppliersname7",
 			"email" : "tyrekjkyt",
 			"f_name" : "rdyjyt",
 			"goods_resived" : 0,
@@ -56,21 +56,7 @@
 			"l_name" : "yrj",
 			"mobile" : "rtjh",
 			"total_coast" : 0.0
-		},
-		{
-			"address" : "atya",
-			"company_email" : "dferght",
-			"company_mobile" : "wretyr",
-			"company_name" : "QwertyName123456",
-			"email" : "arjhdtasjts",
-			"f_name" : "asrht",
-			"goods_resived" : 0,
-			"id" : 6,
-			"jobtitle" : "tjs",
-			"l_name" : "aghddt",
-			"mobile" : "sjt",
-			"total_coast" : 0.0
 		}
 	],
-	"size" : 5
+	"size" : 4
 }

@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CategoriesRepo.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="ClientsRepo.h" />
     <ClInclude Include="framework.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="UsersRepo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CategoriesRepo.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientsRepo.cpp" />
     <ClCompile Include="Helper.cpp" />

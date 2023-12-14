@@ -31,10 +31,12 @@
 #define IDD_DIALOG17                    145
 #define IDD_DIALOG18                    146
 #define IDD_DIALOG19                    147
+#define IDD_DIALOG20                    148
 #define IDC_BUTTON1                     1000
 #define IDC_BTN_SAVE_SAPP               1000
 #define IDC_BTN_SAVE_ADDSAPP            1000
 #define IDC_BTN_RESET                   1000
+#define IDC_ADDCAT_BTN                  1000
 #define IDC_BUTTON2                     1001
 #define IDC_BTN_CANCEL_ADDSAPP          1001
 #define IDC_BUTTON3                     1002
@@ -267,6 +269,7 @@
 #define IDC_LIST_PRODUCTS               1196
 #define IDC_EDIT_INPRICE                1198
 #define IDC_EDIT_OUTPRICE               1199
+#define IDC_EDIT_ADDCAT                 1200
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -274,9 +277,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        148
+#define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1200
+#define _APS_NEXT_CONTROL_VALUE         1201
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
