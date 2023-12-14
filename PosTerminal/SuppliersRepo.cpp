@@ -38,6 +38,7 @@ void SuppliersRepo::loadData()
 		
 		supliers.push_back(sup);
 		indent.push_back(sup.getId());
+		sortname.push_back(sup.getComName());
 	}
 }
 
@@ -281,19 +282,54 @@ void SuppliersRepo::displayAll(HWND hDlg, HWND hList)
 {
 	Helper helper;
 	int n = 1;
-	indent.clear(); 
+	indent.clear();
+	
 
 	for (auto s : supliers) {
 		indent.push_back(supliers[n - 1].getId());
-		std::string suplier = std::to_string(n++) + "               " + s.getComName() + 
-			"                                                                                                                                                            " 
-			+ std::to_string(s.getGoodsResive()) + "                                            " + std::to_string(s.getTotalCoast());
+		std::string suplier = std::to_string(n++) + "               " + 
+			s.getComName() + "                                                                                                                                                            " + 
+			std::to_string(s.getGoodsResive()) + "                                            " + std::to_string(s.getTotalCoast());
 		TCHAR* pInfo = helper.string_tchar(suplier);
 		SendMessage(hList, LB_ADDSTRING, 0, LPARAM(pInfo));
 		delete[] pInfo;
 	}
 	
 }
+
+void SuppliersRepo::comboSort(HWND hDlg, HWND hCombo1)
+{
+	SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)_T("By name"));
+	SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)_T("By goods recived"));
+	SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)_T("By total cost"));
+}
+void SuppliersRepo::sortByName(HWND hDlg, HWND hList)
+{
+	Helper helper;
+	indent.clear(); 
+	sort(sortname.begin(), sortname.end()); 
+	//->
+	SendMessage(hList, LB_RESETCONTENT, 0, 0); 
+	int n = 1;
+	
+	for (int i = 0; i < sortname.size(); i++) {
+		for (auto s : supliers) {
+			if (s.getComName() == sortname[i]) {
+				std::string sup = std::to_string(n++) + "               " +
+					s.getComName() + "                                                                                                                                                            " +
+					std::to_string(s.getGoodsResive()) + "                                            " + std::to_string(s.getTotalCoast()); 
+				// ->
+				TCHAR* pInfo = helper.string_tchar(sup);
+				SendMessage(hList, LB_ADDSTRING, 0, LPARAM(pInfo)); 
+				indent.push_back(s.getId()); 
+				delete[] pInfo;
+			}
+		}
+	}
+
+	
+}
+
 
 std::vector<Supplier> SuppliersRepo::getSuppliers()
 {

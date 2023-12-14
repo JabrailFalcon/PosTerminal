@@ -21,7 +21,7 @@ HWND hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, h
 HWND hComboProdCategories, hComboProdSort, hEditProdNameSKU, hPriceSlider, hComboProdCategoriesAdd;
 
 //* GLOBAL Variers:
-bool isAuthorize = true;
+bool isAuthorize = false;
 bool isAdmin = true;
 bool continueProcess = true;
 bool isBtnEdit = false;
@@ -248,7 +248,9 @@ INT_PTR CALLBACK Authorization(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
                 }
                 else {
                     // Authorization ...
-                    //isAuthorize = usersRepo->authenticate(buff1, buff2);
+                    usersRepo->loadData();
+                    isAuthorize = usersRepo->authenticate(buff1, buff2);
+                    //isAdmin = 
                     if (!isAuthorize) {
                         MessageBox(hDlg, L"Users not found!", L"Notification", MB_OK | MB_ICONERROR);
                         SetWindowText(hEdit1, L"");
@@ -1062,6 +1064,8 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         // ->
         supplierRepo->loadData();
         supplierRepo->displayAll(hDlg, hList);
+        supplierRepo->comboSort(hDlg, hCombo1); 
+        
     }
     return (INT_PTR)TRUE;
 
@@ -1070,22 +1074,26 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         {        
             //-> 
             TCHAR buff1[100];
-            //TCHAR buff2[100];
+            TCHAR buff2[100];
             if (wmId == IDC_BTN_ADD_SUP) {
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG9), hDlg, AddSuplier); 
             }
             else if (wmId == IDC_BTN_SELECT_SUP) {
                 GetWindowText(hEditSearch, buff1, 100);
-                //GetWindowText(hCombo1, buff2, 100); 
-                if (lstrlen(buff1) == 0) {
+                GetDlgItemText(hDlg, IDC_COMBO_SORT_SUP, buff2, 100); 
+                if (lstrlen(buff1) == 0 && lstrlen(buff2) == 0) {
                     MessageBox(hDlg, L"Search attributes are not specified!", L"Warning!", MB_OK | MB_ICONWARNING); 
                     SendMessage(hList, LB_RESETCONTENT, 0, 0); 
                     supplierRepo->displayAll(hDlg, hList); 
                     SetFocus(hEditSearch);
                 }
-                else {
+                else if (lstrlen(buff1) != 0 && lstrlen(buff2) == 0) {
                     supplierRepo->displayExist(buff1, hDlg, hList);
-                  
+
+                }
+                else if (lstrlen(buff1) == 0 && lstrlen(buff2) != 0) {
+                    supplierRepo->sortByName(hDlg, hList);
+
                 }
             }
             else if (wmId == IDC_BTN_EDIT_SUP) {     
