@@ -22,7 +22,7 @@ HWND hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, h
 HWND hComboProdCategories, hComboProdSort, hEditProdNameSKU, hPriceSlider, hComboProdCategoriesAdd, hBtnCatAdd, hBtnCatOk, hEditCatAdd;
 
 //* GLOBAL Variers:
-bool isAuthorize = false;
+bool isAuthorize = true;
 bool isAdmin = true;
 bool continueProcess = true;
 bool isBtnEdit = false;
@@ -415,6 +415,7 @@ INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
        productsRepo->loadData();
        productsRepo->displayAllProducts(hProductsList);
        productsRepo->comboSort(hComboProdSort);
+       categoriesRepo->loadData();
        categoriesRepo->comboCategories(hComboProdCategories);
 
     }
@@ -430,7 +431,8 @@ INT_PTR CALLBACK Products(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
             }
             else if (wmId == IDC_BTN_Select) {
-               productsRepo->selectProducts(hDlg, hProductsList, hEditProdNameSKU);
+                sortedProducts = true;
+                productsRepo->selectProducts(hDlg, hProductsList, hEditProdNameSKU);
             }
             else if (wmId == IDC_BTN_EditP) {
                 editProduct = true;  
@@ -564,8 +566,8 @@ INT_PTR CALLBACK AddCategory(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
                 categoriesRepo->addCategory(hDlg, hEditCatAdd); 
                 SendMessage(hComboProdCategoriesAdd, CB_RESETCONTENT, 0, 0);
                 categoriesRepo->comboCategories(hComboProdCategoriesAdd); 
-                int index = categoriesRepo->categoriesSize() - 1;
-                SendMessage(hComboProdCategoriesAdd, CB_SETCURSEL, index, 0); 
+                int catindex = categoriesRepo->categoriesSize() - 1;
+                SendMessage(hComboProdCategoriesAdd, CB_SETCURSEL, catindex, 0); 
 
                 EndDialog(hDlg, wmId);
             }

@@ -29,13 +29,14 @@ void CategoriesRepo::saveData()
 	Json::StyledStreamWriter writer;
 
 	int size = categories.size();
-	data["size"] = size;
+	
 
 	int i = 0;
 	for (auto& category : categories) {
 		data["categories"][i]["category"] = category;
 		i++;
 	}
+	data["size"] = size;
 
 	std::ofstream fout;
 	fout.open(filepath);
