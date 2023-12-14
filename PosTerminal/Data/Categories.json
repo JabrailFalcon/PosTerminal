@@ -12,7 +12,19 @@
 		},
 		{
 			"category" : "category4"
+		},
+		{
+			"category" : "category5"
+		},
+		{
+			"category" : "category6"
+		},
+		{
+			"category" : "category7"
+		},
+		{
+			"category" : "category8"
 		}
 	],
-	"size" : 4
+	"size" : 8
 }

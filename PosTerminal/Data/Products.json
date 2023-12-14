@@ -6,7 +6,7 @@
 			"description" : "description1",
 			"id" : 1,
 			"in_price" : 10.1,
-			"name" : "Testname1",
+			"name" : "Testname11",
 			"out_price" : 10.1,
 			"quantity" : 124,
 			"sku" : "TF865"
@@ -40,7 +40,67 @@
 			"out_price" : 40.399999999999999,
 			"quantity" : 766,
 			"sku" : "TF868"
+		},
+		{
+			"category" : "category1",
+			"description" : "adsas",
+			"id" : 5,
+			"in_price" : 42.0,
+			"name" : "test11",
+			"out_price" : 23.0,
+			"quantity" : 234,
+			"sku" : "TF31212"
+		},
+		{
+			"category" : "category1",
+			"description" : "asdasd",
+			"id" : 6,
+			"in_price" : 43.0,
+			"name" : "test22",
+			"out_price" : 423.0,
+			"quantity" : 23,
+			"sku" : "TF31238"
+		},
+		{
+			"category" : "category5",
+			"description" : "sada",
+			"id" : 7,
+			"in_price" : 312.0,
+			"name" : "testcat",
+			"out_price" : 3123.0,
+			"quantity" : 131,
+			"sku" : "TF12819"
+		},
+		{
+			"category" : "category5",
+			"description" : "asdasd",
+			"id" : 8,
+			"in_price" : 323.0,
+			"name" : "cattest",
+			"out_price" : 131.0,
+			"quantity" : 312,
+			"sku" : "TF13289"
+		},
+		{
+			"category" : "category6",
+			"description" : "asdasd",
+			"id" : 9,
+			"in_price" : 3244.0,
+			"name" : "cattest6",
+			"out_price" : 2423.0,
+			"quantity" : 31,
+			"sku" : "TF13413"
+		},
+		{
+			"category" : "category8",
+			"description" : "asdadasdas",
+			"id" : 10,
+			"in_price" : 131.0,
+			"name" : "dasdad",
+			"out_price" : 12313.0,
+			"quantity" : 1313,
+			"sku" : "TF14706"
 		}
 	],
-	"size" : 4
+	"size" : 10
 }
