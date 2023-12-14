@@ -40,7 +40,47 @@
 			"out_price" : 40.399999999999999,
 			"quantity" : 766,
 			"sku" : "TF868"
+		},
+		{
+			"category" : "category1",
+			"description" : "1asdasda",
+			"id" : 6,
+			"in_price" : 31.0,
+			"name" : "secondsortedittry",
+			"out_price" : 31.0,
+			"quantity" : 131,
+			"sku" : "TF12179"
+		},
+		{
+			"category" : "category2",
+			"description" : "asdasda",
+			"id" : 7,
+			"in_price" : 1231.0,
+			"name" : "normal",
+			"out_price" : 2342.0,
+			"quantity" : 4123,
+			"sku" : "TF12228"
+		},
+		{
+			"category" : "category4",
+			"description" : "asdadas",
+			"id" : 8,
+			"in_price" : 131.0,
+			"name" : "testname",
+			"out_price" : 131.0,
+			"quantity" : 4324,
+			"sku" : "TF12656"
+		},
+		{
+			"category" : "category5",
+			"description" : "asdasd",
+			"id" : 9,
+			"in_price" : 31.0,
+			"name" : "cat5test",
+			"out_price" : 31.0,
+			"quantity" : 34,
+			"sku" : "TF14482"
 		}
 	],
-	"size" : 4
+	"size" : 8
 }
