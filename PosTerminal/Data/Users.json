@@ -1,35 +1,46 @@
 {
-  "size": 3,
-  "users": [
-      {
-          "id": 1,
-          "f_name": "Maks",
-          "l_name": "Lysenkov",
-          "role": "admin",
-          "mobile": "+380662860358",
-          "email": "admin@gmail.com",
-          "status": "on",
-          "password": "admin"
-      },
-      {
-          "id": 2,
-          "f_name": "Misha",
-          "l_name": "Zuravel",
-          "role": "user",
-          "mobile": "+380976492325",
-          "email": "dfsdadjahdjknfl@gmail.com",
-          "status": "on",
-          "password": "sdfsfkj32kjfkjef"
-      },
-      {
-          "id": 3,
-          "f_name": "SomeNamw",
-          "l_name": "SomeSurname",
-          "role": "SomeRole",
-          "mobile": "SomePhone",
-          "email": "SomeEmail",
-          "status": "SomeStatus",
-          "password": "SomePassword"
-      }
-  ]
+	"size" : 4,
+	"users" : 
+	[
+		{
+			"email" : "admin@gmail.com",
+			"f_name" : "Maks",
+			"id" : 1,
+			"l_name" : "Lysenkov",
+			"mobile" : "+380662860358",
+			"password" : "admin",
+			"role" : "admin",
+			"status" : "on"
+		},
+		{
+			"email" : "dfsdadjahdjknfl@gmail.com",
+			"f_name" : "Misha",
+			"id" : 2,
+			"l_name" : "Zuravel",
+			"mobile" : "+380976492325",
+			"password" : "sdfsfkj32kjfkjef",
+			"role" : "user",
+			"status" : "on"
+		},
+		{
+			"email" : "dsfdbgfnh@gmail.com",
+			"f_name" : "Sasha",
+			"id" : 3,
+			"l_name" : "Moiseev",
+			"mobile" : "+380504967205",
+			"password" : "dfdsghfnhg435465",
+			"role" : "client",
+			"status" : "on"
+		},
+		{
+			"email" : "dfs",
+			"f_name" : "fds",
+			"id" : 4,
+			"l_name" : "dfs",
+			"mobile" : "fdsd",
+			"password" : "fdsf",
+			"role" : "suplier",
+			"status" : "off"
+		}
+	]
 }

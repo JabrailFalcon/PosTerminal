@@ -13,7 +13,7 @@
 //* Description
 HWND hEdit1, hEdit2, hEdit3, hEdit4, hEdit5, hEdit6, hEdit7, hEdit8, hEdit9, hEditSearch;
 HWND hBtnLogin, hBtnClose, hBtnTerminal, hBtnProduct, hBtnPricing, hBtnLocation, hBtnClient, hBtnUsers, hBtnSupliers, hBtnReports;
-HWND hBtnAdd, hBtnDel, hBtnPay, hBtnSelect, hBtnEdit, hBtnCategory, hBtnGenerate, hBtnMovement, hBtnApply1, hBtnApply2, hBtnSave;
+HWND hBtnAdd, hBtnDel, hBtnPay, hBtnSelect, hBtnReset, hBtnEdit, hBtnCategory, hBtnGenerate, hBtnMovement, hBtnApply1, hBtnApply2, hBtnSave;
 HWND hCombo1, hCombo2, hCombo3;
 HWND hList, hProductsList, hUsersList;
 HWND hDataFrom, hDataTo;
@@ -28,6 +28,9 @@ bool continueProcess = true;
 bool isBtnEdit = false;
 //
 bool AddEdit = true;
+int UserDeleteIndex;
+int IndexToEdit;
+int UserId = -1;
 //
 // main
 Helper helper;
@@ -591,25 +594,28 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_INITDIALOG:
     {
         // . . . :
-        const wchar_t* status_opt_1 = L"On";
-        const wchar_t* status_opt_2 = L"Off";
+        const wchar_t* status_opt_1 = L"on";
+        const wchar_t* status_opt_2 = L"off";
 
         //
-        const wchar_t* role_opt_1 = L"Admin";
-        const wchar_t* role_opt_2 = L"Client";
-        const wchar_t* role_opt_3 = L"Suplier";
+        const wchar_t* role_opt_1 = L"admin";
+        const wchar_t* role_opt_2 = L"client";
+        const wchar_t* role_opt_3 = L"suplier";
 
         bool AddEdit = true;
 
         // Description
         hBtnAdd = GetDlgItem(hDlg, IDC_BTN_AddUser);
         hBtnSelect = GetDlgItem(hDlg, IDC_BTN_Select2);
+        hBtnReset = GetDlgItem(hDlg, IDC_BTN_SELECT3);
         hBtnEdit = GetDlgItem(hDlg, IDC_BTN_Edit2);
         hBtnDel = GetDlgItem(hDlg, IDC_BTN_Del2);
         hBtnClose = GetDlgItem(hDlg, IDC_BTN_Close2);
         hEdit1 = GetDlgItem(hDlg, IDC_EDIT_SEARCH_USER);
         hCombo1 = GetDlgItem(hDlg, IDC_COMBO_ROLE_USER);
         hCombo2 = GetDlgItem(hDlg, IDC_COMBO_STATUS_USER);
+        // hUsersList:
+        hUsersList = GetDlgItem(hDlg, IDC_LIST_USERS);
 
         // Status CB:
         SendMessage(hCombo2, CB_ADDSTRING, 0, (LPARAM)status_opt_1);
@@ -621,15 +627,10 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)role_opt_3);
 
         // mine:
-        // hUsersList:
-        hUsersList = GetDlgItem(hDlg, IDC_LIST_USERS);
 
         // actions:
         usersRepo->loadData();
         usersRepo->displayUsers(hDlg, hUsersList);
-
-        // clear:
-        usersRepo->clear();
     }
     return (INT_PTR)TRUE;
 
@@ -640,34 +641,43 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             TCHAR buff1[100];
 
             if (wmId == IDC_BTN_AddUser) {
-                AddEdit = true;
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, AddUser);
             }
             else if (wmId == IDC_BTN_Select2) {
-                GetWindowText(hEdit1, buff1, 100);
-                if (lstrlen(buff1) == 0) {
-                    MessageBox(hDlg, L"Search attributes are not specified!", L"Warning!", MB_OK | MB_ICONWARNING);
-                    SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
-                    usersRepo->loadData();
-                    usersRepo->displayUsers(hDlg, hUsersList);
-                    SetFocus(hEdit1);
-                }
-                else {
-                    // . . . 
-                    //usersRepo->sort(buff1, hDlg, hUsersList);
-                }
+                usersRepo->sorting(hDlg, hEdit1, hUsersList);
+
+            }
+            else if (wmId == IDC_BTN_SELECT3) {
+                SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
+                usersRepo->displayUsers(hDlg, hUsersList);
             }
             else if (wmId == IDC_BTN_Edit2) {
-                AddEdit = false;
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, AddUser);
+                IndexToEdit = SendMessage(hUsersList, LB_GETCURSEL, 0, 0);
+                Helper helper;
+                /*std::string buffer = std::to_string(IndexToEdit);
+                TCHAR* buff = helper.string_tchar(buffer);
+                MessageBox(hDlg, buff, L"Warning", MB_OK || MB_ICONWARNING);*/
+                if (IndexToEdit < 0) {
+                    MessageBox(hDlg, L"First of all, select user from list!", L"Warning!", MB_OK | MB_ICONWARNING);
+                }
+                else {
+                    AddEdit = false;
+                    DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, AddUser);
 
+                }
             }
             else if (wmId == IDC_BTN_Del2) {
-                // . . . 
-
-                int selIndex = SendMessage(hUsersList, LB_GETCURSEL, 0, 0);
-                int colItem = SendMessage(hUsersList, LB_DELETESTRING, WPARAM(selIndex), 0);
-
+                Helper helper;
+                UserDeleteIndex = SendMessage(hUsersList, LB_GETCURSEL, 0, 0);
+                //usersRepo->deleteUser(UserDeleteIndex);
+                if (UserDeleteIndex < 0) {
+                    MessageBox(hDlg, L"Choose the user to delete!", L"Warning!", MB_OK | MB_ICONWARNING);
+                }
+                else {
+                    usersRepo->deleteUser(UserDeleteIndex);
+                    SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
+                    usersRepo->displayUsers(hDlg, hUsersList);
+                }
             }
 
             else if (wmId == IDC_BTN_Close2) {
@@ -693,13 +703,13 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_INITDIALOG:
     {
         // . . .
-        const wchar_t* status_opt_1 = L"On";
-        const wchar_t* status_opt_2 = L"Off";
+        const wchar_t* status_opt_1 = L"on";
+        const wchar_t* status_opt_2 = L"off";
 
         //
-        const wchar_t* role_opt_1 = L"Admin";
-        const wchar_t* role_opt_2 = L"Client";
-        const wchar_t* role_opt_3 = L"Suplier";
+        const wchar_t* role_opt_1 = L"admin";
+        const wchar_t* role_opt_2 = L"client";
+        const wchar_t* role_opt_3 = L"suplier";
 
         // Description
         hEdit1 = GetDlgItem(hDlg, IDC_EDIT_FN_USER);
@@ -711,6 +721,11 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         hEdit6 = GetDlgItem(hDlg, IDC_EDIT_PASS_USER);
         hBtnAdd = GetDlgItem(hDlg, IDC_BTN_ADD3);
         hBtnClose = GetDlgItem(hDlg, IDC_BTN_CANCEL3);
+
+        if (AddEdit == false) {
+            UserId = SendMessage(hUsersList, LB_GETCURSEL, 0, 0) + 1;
+            usersRepo->displayEdits(UserId, hEdit1, hEdit2, hEdit3, hCombo2, hCombo1, hEdit5, hEdit6);
+        }
 
         // Status CB:
         SendMessage(hCombo2, CB_ADDSTRING, 0, (LPARAM)status_opt_1);
@@ -727,11 +742,8 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         if (AddEdit == true) {
             int wmId = LOWORD(wParam);
             {
+                TCHAR fNameBuff[100], lNameBuff[100], roleBuff[100], mobileBuff[100], emailBuff[100], statusBuff[100], passwordBuff[100];;
                 if (wmId == IDC_BTN_SAVE_USER) {
-
-                    // . . .
-
-                    TCHAR fNameBuff[100], lNameBuff[100], roleBuff[100], mobileBuff[100], emailBuff[100], statusBuff[100], passwordBuff[100];
                     GetWindowText(hEdit1, fNameBuff, 100);
                     GetWindowText(hEdit2, lNameBuff, 100);
                     GetWindowText(hEdit3, mobileBuff, 100);
@@ -771,17 +783,19 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                     }
 
                     else {
-                        //std::vector<User> allUsers = usersRepo->getUsers();
-                        //int newID = allUsers.back().getId() + 1;
-
-                        /*User newUser(newID, fNameBuff, lNameBuff, roleBuff, mobileBuff, emailBuff, statusBuff, passwordBuff);
-                        usersRepo->addUser(newUser);*/
-
-                        SendMessage(hUsersList, LB_ADDSTRING, 0, LPARAM(fNameBuff));
-                        usersRepo->saveData();
-                        EndDialog(hDlg, wmId);
-                        MessageBox(hDlg, L"The user was added successfully!", L"successfully", MB_OK | MB_ICONINFORMATION);
-                        return (INT_PTR)TRUE;
+                        usersRepo->addUser(hDlg, hUsersList, passwordBuff, mobileBuff, emailBuff, roleBuff, fNameBuff,
+                            lNameBuff, statusBuff);
+                        MessageBox(hDlg, L"User successfully added!", L"Warning!", MB_OK | MB_ICONINFORMATION);
+                        SetWindowText(hEdit1, L"");
+                        SetWindowText(hEdit2, L"");
+                        SetWindowText(hEdit3, L"");
+                        SetWindowText(hCombo1, L"");
+                        SetWindowText(hCombo2, L"");
+                        SetWindowText(hEdit5, L"");
+                        SetWindowText(hEdit6, L"");
+                        SetFocus(hEdit1);
+                        SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
+                        usersRepo->displayUsers(hDlg, hUsersList);
                     }
                     // Fin:
 
@@ -863,17 +877,24 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                         SetFocus(hEdit6);
                     }
                     else {
-                        //std::vector<User> allUsers = usersRepo->getUsers();
-                        //int newID = allUsers.back().getId() + 1;
-
-                        /*User newUser(newID, fNameBuff, lNameBuff, roleBuff, mobileBuff, emailBuff, statusBuff, passwordBuff);
-                        usersRepo->addUser(newUser);*/
-
-                        SendMessage(hUsersList, LB_ADDSTRING, 0, LPARAM(emailBuff));
-                        usersRepo->saveData();
-                        EndDialog(hDlg, wmId);
-                        MessageBox(hDlg, L"The user was edited successfully!", L"successfully", MB_OK | MB_ICONINFORMATION);
-                        return (INT_PTR)TRUE;
+                        if (UserDeleteIndex < 0) {
+                            MessageBox(hDlg, L"Choose the user to delete!", L"Warning!", MB_OK | MB_ICONWARNING);
+                        }
+                        else {
+                            usersRepo->editUser(hDlg, hEdit1, hEdit2, hEdit3, hCombo2, hEdit5, hEdit6,
+                                hCombo1, UserId);
+                            MessageBox(hDlg, L"The user was edited successfully!", L"successfully", MB_OK | MB_ICONINFORMATION);
+                            SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
+                            usersRepo->displayUsers(hDlg, hUsersList);
+                            SetWindowText(hEdit1, L"");
+                            SetWindowText(hEdit2, L"");
+                            SetWindowText(hEdit3, L"");
+                            SetWindowText(hCombo1, L"");
+                            SetWindowText(hCombo2, L"");
+                            SetWindowText(hEdit5, L"");
+                            SetWindowText(hEdit6, L"");
+                            return (INT_PTR)TRUE;
+                        }
                     }
                 }
                 else if (wmId == IDC_COMBO_STATUS_AD_USER) {
@@ -881,7 +902,6 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                         CHAR str_1[255];
                         int i = SendMessage(hCombo2, CB_GETCURSEL, 0, 0);
                         SendMessage(hCombo2, CB_GETLBTEXT, i, (LPARAM)str_1);
-
                     }
                 }
                 else if (wmId == IDC_COMBO_ROLE_AD_USER) {
