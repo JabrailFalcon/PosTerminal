@@ -621,15 +621,10 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)role_opt_3);
 
         // mine:
-        // hUsersList:
-        hUsersList = GetDlgItem(hDlg, IDC_LIST_USERS);
 
         // actions:
         usersRepo->loadData();
         usersRepo->displayUsers(hDlg, hUsersList);
-
-        // clear:
-        usersRepo->clear();
     }
     return (INT_PTR)TRUE;
 
@@ -640,7 +635,6 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             TCHAR buff1[100];
 
             if (wmId == IDC_BTN_AddUser) {
-                AddEdit = true;
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, AddUser);
             }
             else if (wmId == IDC_BTN_Select2) {
@@ -648,15 +642,8 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 if (lstrlen(buff1) == 0) {
                     MessageBox(hDlg, L"Search attributes are not specified!", L"Warning!", MB_OK | MB_ICONWARNING);
                     SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
-                    usersRepo->loadData();
                     usersRepo->displayUsers(hDlg, hUsersList);
-                    SetFocus(hEdit1);
                 }
-                else {
-                    // . . . 
-                    //usersRepo->sort(buff1, hDlg, hUsersList);
-                }
-            }
             else if (wmId == IDC_BTN_Edit2) {
                 AddEdit = false;
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG5), hDlg, AddUser);
@@ -728,10 +715,6 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             int wmId = LOWORD(wParam);
             {
                 if (wmId == IDC_BTN_SAVE_USER) {
-
-                    // . . .
-
-                    TCHAR fNameBuff[100], lNameBuff[100], roleBuff[100], mobileBuff[100], emailBuff[100], statusBuff[100], passwordBuff[100];
                     GetWindowText(hEdit1, fNameBuff, 100);
                     GetWindowText(hEdit2, lNameBuff, 100);
                     GetWindowText(hEdit3, mobileBuff, 100);
@@ -881,7 +864,6 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                         CHAR str_1[255];
                         int i = SendMessage(hCombo2, CB_GETCURSEL, 0, 0);
                         SendMessage(hCombo2, CB_GETLBTEXT, i, (LPARAM)str_1);
-
                     }
                 }
                 else if (wmId == IDC_COMBO_ROLE_AD_USER) {
