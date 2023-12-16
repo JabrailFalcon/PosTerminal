@@ -82,7 +82,8 @@ void ProductsRepo::displayAllProducts(HWND& hProductsList)
 			<< std::setw(50) << p.getName()
 			<< std::setw(45) << p.getCategory()
 			<< std::setw(15) << p.getQuantity()
-			<< std::setw(15) << p.getOut_price();
+			<< std::setw(15) << p.getOut_price()
+			<< std::setw(15) << p.getIn_price();
 		product = ss.str();
 		pInfo = helper.string_tchar(product);
 		SendMessage(hProductsList, LB_ADDSTRING, 0, LPARAM(pInfo));
@@ -90,12 +91,8 @@ void ProductsRepo::displayAllProducts(HWND& hProductsList)
 	}
 }
 
-void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditProductName, HWND& hEditProductDesc,
-	HWND& hEditProductInprice, HWND& hEditProductOutprice, HWND& hEditProductQuantity, HWND& hComboProdCategories, int productid, bool edit, bool sorted)
+Product* ProductsRepo::createProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditProductName, HWND& hEditProductDesc, HWND& hEditProductInprice, HWND& hEditProductOutprice, HWND& hEditProductQuantity, HWND& hComboProdCategories, int productid, bool edit, std::string samesku)
 {
-	//
-	bool correct = false;
-	//
 	std::string sku;
 	std::string name;
 	std::string category;
@@ -115,19 +112,19 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 	if (lstrlen(buff) == 0) {
 		MessageBox(hDlg, L"SKU is empty", L"Warning", MB_OK || MB_ICONWARNING);
 		SetFocus(hEditProductSKU);
-		return;
+		return nullptr;
 	}
 	else {
-		bool skuyes = checkSKU_Availability(helper.tchar_string(buff));
-		if (skuyes || (edit && !skuyes)) {
-			sku = helper.tchar_string(buff);
+		sku = helper.tchar_string(buff);
+		bool skuyes = checkSKU_Availability(sku);
+		if (skuyes || sku == samesku) {
 			GetWindowText(hEditProductName, buff, 100);
 		}
 		else {
 			MessageBox(hDlg, L"This SKU already exists. It should be unique.", L"Warning", MB_OK || MB_ICONWARNING);
 			SetWindowText(hEditProductSKU, 0);
 			SetFocus(hEditProductSKU);
-			return;
+			return nullptr;
 		}
 	}
 
@@ -135,18 +132,18 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 	if (lstrlen(buff) == 0) {
 		MessageBox(hDlg, L"Product name is empty", L"Warning", MB_OK || MB_ICONWARNING);
 		SetFocus(hEditProductName);
-		return;
+		return nullptr;
 	}
 	else {
 		name = helper.tchar_string(buff);
 		GetWindowText(hEditProductInprice, buff, 100);
 	}
-	//
+
 	//IN-PRICE
 	if (lstrlen(buff) == 0) {
 		MessageBox(hDlg, L"In-price is empty", L"Warning", MB_OK || MB_ICONWARNING);
 		SetFocus(hEditProductInprice);
-		return;
+		return nullptr;
 	}
 	else {
 		std::string text = helper.tchar_string(buff);
@@ -158,7 +155,7 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 			MessageBox(hDlg, L"Input correct in-price value!", L"Warning", MB_OK || MB_ICONWARNING);
 			SetWindowText(hEditProductInprice, 0);
 			SetFocus(hEditProductInprice);
-			return;
+			return nullptr;
 		}
 	}
 
@@ -166,7 +163,7 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 	if (lstrlen(buff) == 0) {
 		MessageBox(hDlg, L"Out-price is empty", L"Warning", MB_OK || MB_ICONWARNING);
 		SetFocus(hEditProductOutprice);
-		return;
+		return nullptr;
 	}
 	else {
 		std::string text = helper.tchar_string(buff);
@@ -178,7 +175,7 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 			MessageBox(hDlg, L"Input correct out-price value!", L"Warning", MB_OK || MB_ICONWARNING);
 			SetWindowText(hEditProductOutprice, 0);
 			SetFocus(hEditProductOutprice);
-			return;
+			return nullptr;
 		}
 	}
 
@@ -186,7 +183,7 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 	if (lstrlen(buff) == 0) {
 		MessageBox(hDlg, L"Quantity is empty", L"Warning", MB_OK || MB_ICONWARNING);
 		SetFocus(hEditProductQuantity);
-		return;
+		return nullptr;
 	}
 	else {
 		std::string text = helper.tchar_string(buff);
@@ -198,7 +195,7 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 			MessageBox(hDlg, L"Input correct quantity value!", L"Warning", MB_OK || MB_ICONWARNING);
 			SetWindowText(hEditProductQuantity, 0);
 			SetFocus(hEditProductQuantity);
-			return;
+			return nullptr;
 		}
 	}
 
@@ -206,55 +203,69 @@ void ProductsRepo::modifyProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditP
 	if (lstrlen(buff) == 0) {
 		MessageBox(hDlg, L"Description is empty", L"Warning", MB_OK || MB_ICONWARNING);
 		SetFocus(hEditProductDesc);
-		return;
+		return nullptr;
 	}
 	else {
 		description = helper.tchar_string(buff);
-		correct = true;
-	}
-
-	if (correct) {
-
-		std::vector<Product>::iterator iterator;
-
-		//ID
 		if (edit) {
-			iterator = std::find_if(products.begin(), products.end(), [productid](Product& p) { return p.getID() == productid; });
+			auto iterator = std::find_if(products.begin(), products.end(), [productid](Product& p) { return p.getID() == productid; });
 			id = iterator->getID();
-			products.erase(iterator);
-			if (sorted) {
-				iterator = std::find_if(sortedProducts.begin(), sortedProducts.end(), [productid](Product& p) { return p.getID() == productid; });
-				sortedProducts.erase(iterator);
-			}
 		}
 		else {
 			id = products.back().getID() + 1;
 		}
+		Product* product = new Product{ id, sku, name, category, in_price, out_price, description, quantity };
+		return product;
+	}
+}
 
-		Product product{ id, sku, name, category, in_price, out_price, description, quantity };
+void ProductsRepo::addProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditProductName, HWND& hEditProductDesc, HWND& hEditProductInprice, HWND& hEditProductOutprice, HWND& hEditProductQuantity, HWND& hComboProdCategories, int productid, bool edit, bool& correct)
+{
+	Product* product = createProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice,
+		hEditProductOutprice, hEditProductQuantity, hComboProdCategories, productid, edit, "");
+	if (product != nullptr) {
+		products.push_back(*product);
+		delete product;
+		MessageBox(hDlg, L"Added new product", L"Info", MB_OK);
+		saveData();
+		correct = true;
+	}
+}
 
-		if (edit) {
-			products.resize(products.size() + 1);
-			iterator = products.begin() + id - 1;
-			products.insert(iterator, product);
-			products.pop_back();
-		}
-		else {
-			products.push_back(product);
-		}
+void ProductsRepo::editProduct(HWND& hDlg, HWND& hEditProductSKU, HWND& hEditProductName, HWND& hEditProductDesc, HWND& hEditProductInprice, HWND& hEditProductOutprice, HWND& hEditProductQuantity, HWND& hComboProdCategories, int productid, bool edit, bool sorted, bool& correct, std::string samesku)
+{
+	Product* product = createProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice,
+		hEditProductOutprice, hEditProductQuantity, hComboProdCategories, productid, edit, samesku);
+	if (product != nullptr) {
+		std::vector<Product>::iterator iterator;
+		iterator = std::find_if(products.begin(), products.end(), [productid](Product& p) { return p.getID() == productid; });
+
+		iterator->setID(product->getID());
+		iterator->setSKU(product->getSKU());
+		iterator->setName(product->getName());
+		iterator->setCategory(product->getCategory());
+		iterator->setIn_price(product->getIn_price());
+		iterator->setOut_price(product->getOut_price());
+		iterator->setDescription(product->getDescription());
+		iterator->setQuantity(product->getQuantity());
 
 		if (sorted) {
-			sortedProducts.push_back(product);
-		}
+			iterator = std::find_if(sortedProducts.begin(), sortedProducts.end(), [productid](Product& p) { return p.getID() == productid; });
 
-		if (edit) {
-			MessageBox(hDlg, L"Edited product", L"Info", MB_OK);
+			iterator->setID(product->getID());
+			iterator->setSKU(product->getSKU());
+			iterator->setName(product->getName());
+			iterator->setCategory(product->getCategory());
+			iterator->setIn_price(product->getIn_price());
+			iterator->setOut_price(product->getOut_price());
+			iterator->setDescription(product->getDescription());
+			iterator->setQuantity(product->getQuantity());
+
 		}
-		else {
-			MessageBox(hDlg, L"Added new product", L"Info", MB_OK);
-		}
-		EndDialog(hDlg, IDC_BTN_ADD3);
+		delete product;
+		MessageBox(hDlg, L"Edited product", L"Info", MB_OK);
 		saveData();
+		correct = true;
 	}
 }
 
@@ -470,7 +481,8 @@ void ProductsRepo::displaySortedProducts(HWND& hProductsList)
 			<< std::setw(50) << p.getName()
 			<< std::setw(45) << p.getCategory()
 			<< std::setw(15) << p.getQuantity()
-			<< std::setw(15) << p.getOut_price();
+			<< std::setw(15) << p.getOut_price()
+			<< std::setw(15) << p.getIn_price();
 		product = ss.str();
 		pInfo = helper.string_tchar(product);
 		SendMessage(hProductsList, LB_ADDSTRING, 0, LPARAM(pInfo));
