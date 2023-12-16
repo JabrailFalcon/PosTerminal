@@ -147,7 +147,6 @@
 #define IDC_COMBO_CATEGORY              1072
 #define IDC_EDIT_DESCRIPTION            1073
 #define IDC_BTN_ADDLOCATION             1074
-#define IDC_BTN_SELECT3                 1075
 #define IDC_BTN_EDIT_LOC                1076
 #define IDC_BTN_DEL_LOC                 1077
 #define IDC_BTN_CLOSE_LOC               1078
@@ -253,6 +252,7 @@
 #define IDC_COMBO_ROLE_USER             1178
 #define IDC_COMBO_STATUS_USER           1179
 #define IDC_BTN_SAVE_USER               1180
+#define IDC_SORT_BY_USER                1180
 #define IDC_BTN_CANCEL_USER             1181
 #define IDC_EDIT_FN_USER                1182
 #define IDC_EDIT_LN_USER                1183
@@ -261,7 +261,10 @@
 #define IDC_EDIT_PASS_USER              1186
 #define IDC_EDIT_FN_CLIENT              1187
 #define IDC_EDITLN_CLIENT               1188
+#define IDC_BTN_CLEAR_USER              1188
 #define IDC_EDIT_MOB_CLIENT             1189
+#define IDC_BTN_SAVE_USER2              1189
+#define IDC_BTN_GENERATE_PASSWORD       1189
 #define IDC_EDIT_MAIL_CLIENT            1190
 #define IDC_EDIT_DISC_CLIENT            1191
 #define IDC_BTN_SAVE_ADDCLIENT          1192
@@ -272,6 +275,10 @@
 #define IDC_EDIT_INPRICE                1198
 #define IDC_EDIT_OUTPRICE               1199
 #define IDC_EDIT_ADDCAT                 1200
+#define IDC_BTN_Select3                 1201
+#define IDC_RESET_SORT_USER             1201
+#define IDC_SORT_BY_USERS               1202
+#define IDC_REDISPLAY_USERS             1203
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -281,7 +288,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        149
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1201
+#define _APS_NEXT_CONTROL_VALUE         1204
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

@@ -5,7 +5,8 @@
 User::User() : id(0), f_name(""), l_name(""), role(""), mobile(""), email(""), status(""), password("")
 {}
 
-User::User(int id, std::string f_name, std::string l_name, std::string role, std::string mobile, std::string email,
+User::User(int id, std::string f_name, std::string l_name, std::string role, 
+    std::string mobile, std::string email,
     std::string status, std::string password)
     : id(id), f_name(f_name), l_name(l_name), role(role), mobile(mobile), email(email),
     status(status), password(password)

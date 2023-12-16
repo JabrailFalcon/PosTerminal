@@ -23,6 +23,9 @@ public:
         HWND& EditStatus, HWND& EditRole, HWND& EditEmail, HWND& EditPassword);
     void sorting(HWND& hDlg, HWND& EditFname, HWND& hUsersList);
     void sortByName(std::string name);
+    void sortByStatus(std::string status);
+    void generatePassword(HWND& hEdit);
+    void sortByRole(std::string role);
     void displaySortingUsers(HWND& hUsersList);
     void deleteUser(int index);
     void displayUsers(HWND hDlg, HWND hUsersList);
