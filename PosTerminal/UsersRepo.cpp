@@ -66,7 +66,8 @@ void UsersRepo::saveData()
     fout.close();
 }
 
-void UsersRepo::addUser(HWND hDlg, HWND hList, TCHAR Password[100], TCHAR Mobile[100], TCHAR Email[100], TCHAR Role[100],
+void UsersRepo::addUser(HWND hDlg, HWND hList, TCHAR Password[100], TCHAR Mobile[100], 
+    TCHAR Email[100], TCHAR Role[100],
     TCHAR Fname[100], TCHAR Lname[100], TCHAR Status[100])
 {
     Helper helper;
@@ -95,7 +96,7 @@ void UsersRepo::addUser(HWND hDlg, HWND hList, TCHAR Password[100], TCHAR Mobile
     int n = indentUser.size();
 
     std::string user = std::to_string(n) + "               " + us.getF_name() + " " + us.getL_name() + "                          " + 
-        us.getRole() + "                                            " + (us.getStatus());
+        us.getRole() + "                                            " + us.getStatus();
     TCHAR* pInfo = helper.string_tchar(user);
     SendMessage(hList, LB_ADDSTRING, 0, LPARAM(pInfo));
     delete[] pInfo;
@@ -122,10 +123,10 @@ void UsersRepo::editUser(HWND& hDlg, HWND& EditFname, HWND& EditLname, HWND& Edi
     int id = 0;
     TCHAR buff[100];
 
-    GetDlgItemText(hDlg, IDC_COMBO_ROLE_USER, buff, 100);
+    GetDlgItemText(hDlg, IDC_COMBO_ROLE_AD_USER, buff, 100);
     role = helper.tchar_string(buff);
 
-    GetDlgItemText(hDlg, IDC_COMBO_STATUS_USER, buff, 100);
+    GetDlgItemText(hDlg, IDC_COMBO_STATUS_AD_USER, buff, 100);
     status = helper.tchar_string(buff);
 
     GetWindowText(EditFname, buff, 100);
@@ -202,22 +203,52 @@ void UsersRepo::sorting(HWND& hDlg, HWND& EditFname, HWND& hUsersList)
     Helper helper;
     sortedUsers.clear();
 
-
     TCHAR text[100];
-    GetDlgItemText(hDlg, IDC_EDIT_SEARCH_USER, text, 100);
-
+    GetDlgItemText(hDlg, IDC_SORT_BY_USER, text, 100);
+    int sortBy = -1;
     std::string stringtext = helper.tchar_string(text);
 
-    GetWindowText(EditFname, text, 100);
-    if (lstrlen(text) == 0) {
-        MessageBox(hDlg, L"Enter user first name", L"Warning", MB_OK || MB_ICONWARNING);
-        SetFocus(EditFname);
-        SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
-        displayUsers(hDlg, hUsersList);
-        return;
+
+    if (stringtext == "Name") sortBy = 0;
+    if (stringtext == "Role") sortBy = 1;
+    if (stringtext == "Status") sortBy = 2;
+
+    switch (sortBy)
+    {
+    case 0:
+    {
+        GetDlgItemText(hDlg, IDC_EDIT_SEARCH_USER, text, 100);
+        GetWindowText(EditFname, text, 100);
+        if (lstrlen(text) == 0) {
+            MessageBox(hDlg, L"Enter user first name", L"Warning", MB_OK || MB_ICONWARNING);
+            SetFocus(EditFname);
+            return;
+        }
+        else {
+            sortByName(helper.tchar_string(text));
+        }
     }
-    else {
-        sortByName(helper.tchar_string(text));
+    break;
+
+    case 1:
+    {
+        GetDlgItemText(hDlg, IDC_COMBO_ROLE_USER, text, 100);
+        sortByRole(helper.tchar_string(text));
+    }
+    break;
+
+    case 2:
+    {
+        GetDlgItemText(hDlg, IDC_COMBO_STATUS_USER, text, 100);
+        sortByStatus(helper.tchar_string(text));
+    }
+    break;
+
+    default:
+    {
+        MessageBox(hDlg, L"Something went wrong", L"Warning", MB_OK || MB_ICONWARNING);
+    }
+    break;
     }
 
     if (sortedUsers.empty()) {
@@ -236,27 +267,58 @@ void UsersRepo::sortByName(std::string name)
         [name](User& u) { return u.getF_name() == name; });
 }
 
+void UsersRepo::sortByStatus(std::string status)
+{
+    std::copy_if(users.begin(), users.end(), std::back_inserter(sortedUsers),
+        [status](User& u) { return u.getStatus() == status; });
+}
+
+void UsersRepo::generatePassword(HWND& hEdit)
+{
+    Helper helper;
+    int number = 0;
+    std::string pwrd = "Abp_";
+    std::string endPwrd = "F!S";
+    do {
+        srand(time(0));
+        number = rand() % 989999 + 100;
+        pwrd += std::to_string(number);
+        pwrd += endPwrd;
+        number = rand() % 989999 + 10000;
+        pwrd += std::to_string(number);
+        SetWindowText(hEdit, helper.string_tchar(pwrd));
+        break;
+
+    } while (true);
+}
+
+void UsersRepo::sortByRole(std::string role)
+{
+    std::copy_if(users.begin(), users.end(), std::back_inserter(sortedUsers),
+        [role](User& u) { return u.getRole() == role; });
+}
+
 void UsersRepo::displaySortingUsers(HWND& hUsersList)
 {
     Helper helper;
     idStorage.clear();
 
     TCHAR* pInfo;
-    std::string product;
+    std::string user;
 
     int i = 1;
     for (auto& u : sortedUsers) {
 
         idStorage.push_back(u.getId());
 
-        std::stringstream ss;
-        ss << std::left << std::setw(10) << i++
+        std::stringstream us;
+        us << std::left << std::setw(10) << i++
             << std::setw(10) << u.getF_name()
             << std::setw(10) << u.getL_name()
             << std::setw(50) << u.getRole()
             << std::setw(45) << u.getStatus();
-        product = ss.str();
-        pInfo = helper.string_tchar(product);
+        user = us.str();
+        pInfo = helper.string_tchar(user);
         SendMessage(hUsersList, LB_ADDSTRING, 0, LPARAM(pInfo));
         delete[] pInfo;
     }
@@ -288,8 +350,10 @@ void UsersRepo::displayUsers(HWND hDlg, HWND hUsersList)
     int N = 0;
     for (auto us : users) {
         N++;
-        std::string user = std::to_string(N) + "             " + us.getF_name() + " " + us.getL_name() +
-            "    " + us.getRole() + "    " + us.getStatus();
+        std::string user = std::to_string(N) + "             " + us.getF_name() + "   " + us.getL_name() +
+            "                                                                                                    " + 
+            "                    " + us.getRole() + "                                                         "
+            + us.getStatus();
         TCHAR* usInfo = helper.string_tchar(user);
         SendMessage(hUsersList, LB_ADDSTRING, 0, LPARAM(usInfo));
         delete[] usInfo;

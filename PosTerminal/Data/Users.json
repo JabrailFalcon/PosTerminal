@@ -1,5 +1,5 @@
 {
-	"size" : 4,
+	"size" : 7,
 	"users" : 
 	[
 		{
@@ -19,7 +19,7 @@
 			"l_name" : "Zuravel",
 			"mobile" : "+380976492325",
 			"password" : "sdfsfkj32kjfkjef",
-			"role" : "user",
+			"role" : "client",
 			"status" : "on"
 		},
 		{
@@ -33,14 +33,44 @@
 			"status" : "on"
 		},
 		{
-			"email" : "dfs",
-			"f_name" : "fds",
+			"email" : "Email4",
+			"f_name" : "Name4",
 			"id" : 4,
-			"l_name" : "dfs",
-			"mobile" : "fdsd",
-			"password" : "fdsf",
+			"l_name" : "SurName4",
+			"mobile" : "PhoneNumber4",
+			"password" : "Password4",
 			"role" : "suplier",
 			"status" : "off"
+		},
+		{
+			"email" : "Email5@gmail.com",
+			"f_name" : "Name5",
+			"id" : 5,
+			"l_name" : "SurName5",
+			"mobile" : "PhoneNumber5",
+			"password" : "Password5",
+			"role" : "client",
+			"status" : "on"
+		},
+		{
+			"email" : "Email6@gmail.com",
+			"f_name" : "Name6",
+			"id" : 6,
+			"l_name" : "SurName6",
+			"mobile" : "+PhoneNumber6",
+			"password" : "Password6",
+			"role" : "suplier",
+			"status" : "on"
+		},
+		{
+			"email" : "Email7@gmail.com",
+			"f_name" : "Name7",
+			"id" : 7,
+			"l_name" : "SurName7",
+			"mobile" : "+PhoneNumber7",
+			"password" : "Password7",
+			"role" : "admin",
+			"status" : "on"
 		}
 	]
 }
