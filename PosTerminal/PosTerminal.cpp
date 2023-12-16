@@ -40,6 +40,7 @@ auto categoriesRepo = std::make_unique<CategoriesRepo>();
 bool sortedProducts = false;
 bool editProduct = false;
 int productID = -1;
+std::string samesku = "";
 
 //* Users:
 auto usersRepo = std::make_unique<UsersRepo>();
@@ -499,12 +500,15 @@ INT_PTR CALLBACK AddProduct(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
             SetWindowText(hDlg, L"Edit product");
             SetWindowText(hBtnAdd, L"Edit");
             productsRepo->fillEditWindow(productID, hEditProductSKU, hEditProductName, hEditProductDesc,
-                hEditProductInprice, hEditProductOutprice, hEditProductQuantity, hComboProdCategoriesAdd); 
+                hEditProductInprice, hEditProductOutprice, hEditProductQuantity, hComboProdCategoriesAdd);
+            TCHAR buff[100];
+            GetWindowText(hEditProductSKU, buff, 100);
+            samesku = helper.tchar_string(buff);
         }
         else {
             SetWindowText(hDlg, L"Add new product");
-            SetWindowText(hEditProductInprice, L"0");
-            SetWindowText(hEditProductOutprice, L"0");
+            SetWindowText(hEditProductInprice, L"0.0");
+            SetWindowText(hEditProductOutprice, L"0.0");
             SetWindowText(hEditProductQuantity, L"0");
             SetWindowText(hBtnAdd, L"Create");
         }
@@ -518,17 +522,26 @@ INT_PTR CALLBACK AddProduct(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                 productsRepo->generateSKU(hEditProductSKU);
             }
             else if (wmId == IDC_BTN_ADD3) {
-                productsRepo->modifyProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice,
-                    hEditProductOutprice, hEditProductQuantity, hComboProdCategoriesAdd, productID, editProduct, sortedProducts); 
-
-                SendMessage(hProductsList, LB_RESETCONTENT, 0, 0); 
-                if (sortedProducts) { 
-                    productsRepo->displaySortedProducts(hProductsList); 
-                } 
-                else { 
-                    productsRepo->displayAllProducts(hProductsList); 
+                bool correct = false;
+                if (editProduct) {
+                    productsRepo->editProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice,
+                        hEditProductOutprice, hEditProductQuantity, hComboProdCategoriesAdd, productID, editProduct, sortedProducts, correct, samesku);
                 }
-                editProduct = false; 
+                else {
+                    productsRepo->addProduct(hDlg, hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice,
+                        hEditProductOutprice, hEditProductQuantity, hComboProdCategoriesAdd, productID, editProduct, correct);
+                }
+                if (correct) {
+                    EndDialog(hDlg, wmId);
+                    SendMessage(hProductsList, LB_RESETCONTENT, 0, 0);
+                    if (sortedProducts) {
+                        productsRepo->displaySortedProducts(hProductsList);
+                    }
+                    else {
+                        productsRepo->displayAllProducts(hProductsList);
+                    }
+                    editProduct = false;
+                }
             }
             else if (wmId == IDC_BTN_PRODCATEGORY) { 
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG20), hDlg, AddCategory); 
