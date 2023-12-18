@@ -279,6 +279,8 @@
 #define IDC_RESET_SORT_USER             1201
 #define IDC_SORT_BY_USERS               1202
 #define IDC_REDISPLAY_USERS             1203
+#define IDC_REDISPLAY_USERS2            1204
+#define IDC_BAN_UNBAN_USERS             1204
 #define IDC_STATIC                      -1
 
 // Next default values for new objects

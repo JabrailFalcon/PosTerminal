@@ -67,8 +67,7 @@ void UsersRepo::saveData()
 }
 
 void UsersRepo::addUser(HWND hDlg, HWND hList, TCHAR Password[100], TCHAR Mobile[100], 
-    TCHAR Email[100], TCHAR Role[100],
-    TCHAR Fname[100], TCHAR Lname[100], TCHAR Status[100])
+    TCHAR Email[100], TCHAR Role[100], TCHAR Fname[100], TCHAR Lname[100], TCHAR Status[100])
 {
     Helper helper;
     char buff1[100];
@@ -273,12 +272,12 @@ void UsersRepo::sortByStatus(std::string status)
         [status](User& u) { return u.getStatus() == status; });
 }
 
-void UsersRepo::generatePassword(HWND& hEdit)
+void UsersRepo::generatePassword(HWND hDlg, HWND& hEdit)
 {
     Helper helper;
     int number = 0;
     std::string pwrd = "Abp_";
-    std::string endPwrd = "F!S";
+    std::string endPwrd = "_F!S";
     do {
         srand(time(0));
         number = rand() % 989999 + 100;
@@ -290,6 +289,9 @@ void UsersRepo::generatePassword(HWND& hEdit)
         break;
 
     } while (true);
+    std::string pwrdString = "  Your password is: \n " + pwrd;
+    TCHAR* passwordBox = helper.string_tchar(pwrdString);
+    MessageBox(hDlg, passwordBox, L"Info!", MB_OK | MB_ICONINFORMATION);
 }
 
 void UsersRepo::sortByRole(std::string role)
@@ -368,12 +370,46 @@ bool UsersRepo::authenticate(TCHAR login[100], TCHAR pass[100])
     // ->
     auto iter = std::find_if(users.begin(), users.end(),
         [loginBuff, passBuff](User& user) {
-            return ((user.getF_name() == loginBuff || user.getEmail() == loginBuff || user.getMobile() == loginBuff) && (user.getPassword() == passBuff));
+            return ((user.getF_name() == loginBuff || user.getEmail() == loginBuff || 
+                user.getMobile() == loginBuff) && (user.getPassword() == passBuff));
         });
     // ->
     bool result = (iter != users.end());
     // ->
     return result;
+}
+
+void UsersRepo::banUnban(HWND& hDlg, int UserId)
+{
+    Helper helper;
+
+    auto iterator = std::find_if(users.begin(), users.end(), [UserId](User& u)
+        { return u.getId() == UserId + 1; });
+
+    std::string F_name = iterator->getF_name();
+    std::string L_name = iterator->getL_name();
+    std::string Mobile = iterator->getMobile();
+    std::string Status = iterator->getStatus();
+    std::string Role = iterator->getRole();
+    std::string Email = iterator->getEmail();
+    std::string Password = iterator->getPassword();
+
+    if (Status == "on") {
+        Status = "off";
+        MessageBox(hDlg, L"  User was succefully banned", L"Info!", MB_OK | MB_ICONINFORMATION);
+    }
+    else {
+        Status = "on";
+        MessageBox(hDlg, L"  User was succefully unbanned", L"Info!", MB_OK | MB_ICONINFORMATION);
+    }
+    users.erase(iterator);
+    User user{UserId, F_name, L_name, Role, Mobile, Email, Status, Password};
+    users.resize(users.size() + 1);
+    iterator = users.begin() + UserId;
+    users.insert(iterator, user);
+    users.pop_back();
+
+    //MessageBox(hDlg, F_name, L"Info!", MB_OK | MB_ICONINFORMATION);
 }
 
 std::vector<User> UsersRepo::getUsers() const
