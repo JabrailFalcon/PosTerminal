@@ -13,7 +13,7 @@
 //* Description
 HWND hEdit1, hEdit2, hEdit3, hEdit4, hEdit5, hEdit6, hEdit7, hEdit8, hEdit9, hEditSearch;
 HWND hBtnLogin, hBtnClose, hBtnTerminal, hBtnProduct, hBtnPricing, hBtnLocation, hBtnClient, hBtnUsers, hBtnSupliers, hBtnReports;
-HWND hBtnAdd, hBtnDel, hBtnPay, hRedisplayUsers, hGeneratePassword, hClear, hBtnSelect, hBtnReset, hBtnEdit, hBtnCategory, hBtnGenerate, hBtnMovement, hBtnApply1, hBtnApply2, hBtnSave;
+HWND hBtnAdd, hBtnDel, hBtnPay, hBtnBanUnban, hRedisplayUsers, hGeneratePassword, hClear, hBtnSelect, hBtnReset, hBtnEdit, hBtnCategory, hBtnGenerate, hBtnMovement, hBtnApply1, hBtnApply2, hBtnSave;
 HWND hCombo1, hCombo2, hCombo3, hSortByUser;
 HWND hList, hProductsList, hUsersList;
 HWND hDataFrom, hDataTo;
@@ -636,6 +636,7 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         hCombo2 = GetDlgItem(hDlg, IDC_COMBO_STATUS_USER);
         hSortByUser = GetDlgItem(hDlg, IDC_SORT_BY_USER);
         hRedisplayUsers = GetDlgItem(hDlg, IDC_REDISPLAY_USERS);
+        hBtnBanUnban = GetDlgItem(hDlg, IDC_BAN_UNBAN_USERS);
 
         // hUsersList:
         hUsersList = GetDlgItem(hDlg, IDC_LIST_USERS);
@@ -698,6 +699,17 @@ INT_PTR CALLBACK Users(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 usersRepo->loadData();
                 SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
                 usersRepo->displayUsers(hDlg, hUsersList);
+            }
+            else if (wmId == IDC_BAN_UNBAN_USERS) {
+                int UserId = SendMessage(hUsersList, LB_GETCURSEL, 0, 0);
+                if (UserId < 0) {
+                    MessageBox(hDlg, L"First of all, select user from list!", L"Warning!", MB_OK | MB_ICONWARNING);
+                }
+                else {
+                    usersRepo->banUnban(hDlg, UserId);
+                    SendMessage(hUsersList, LB_RESETCONTENT, 0, 0);
+                    usersRepo->displayUsers(hDlg, hUsersList);
+                }
             }
             else if (wmId == IDC_BTN_Del2) {
                 Helper helper;
@@ -894,7 +906,7 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                 }
                 else if (wmId == IDC_BTN_GENERATE_PASSWORD) {
-                    usersRepo->generatePassword(hEdit6);
+                    usersRepo->generatePassword(hDlg, hEdit6);
                 }
                 else if (wmId == IDC_BTN_CANCEL_USER) {
                     EndDialog(hDlg, wmId);
@@ -1005,7 +1017,7 @@ INT_PTR CALLBACK AddUser(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                 }
                 else if (wmId == IDC_BTN_GENERATE_PASSWORD) {
-                    usersRepo->generatePassword(hEdit6);
+                    usersRepo->generatePassword(hDlg, hEdit6);
                 }
                 else if (wmId == IDC_BTN_CANCEL_USER) {
                     EndDialog(hDlg, wmId);

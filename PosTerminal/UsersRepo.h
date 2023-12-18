@@ -24,11 +24,12 @@ public:
     void sorting(HWND& hDlg, HWND& EditFname, HWND& hUsersList);
     void sortByName(std::string name);
     void sortByStatus(std::string status);
-    void generatePassword(HWND& hEdit);
+    void generatePassword(HWND hDlg, HWND& hEdit);
     void sortByRole(std::string role);
     void displaySortingUsers(HWND& hUsersList);
     void deleteUser(int index);
     void displayUsers(HWND hDlg, HWND hUsersList);
     bool authenticate(TCHAR login[100], TCHAR pass[100]);
+    void banUnban(HWND& hDlg, int UserId);
     std::vector<User> getUsers() const;
 };
