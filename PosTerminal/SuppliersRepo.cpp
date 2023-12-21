@@ -7,9 +7,11 @@ SuppliersRepo::SuppliersRepo(std::string filePath, std::string fileIdBuff) : fil
 
 void SuppliersRepo::loadData()
 {
-	indent.clear();
-	//->
+	indent.clear();	
 	supliers.clear();
+	sortname.clear();	
+	//->
+
 	Json::Value data;
 	Json::Reader reader;
 	std::ifstream fin; 
@@ -111,6 +113,7 @@ void SuppliersRepo::addSuplier(HWND hDlg, HWND hList, TCHAR comName[100], TCHAR 
 
 	supliers.push_back(s); 
 	indent.push_back(id); 
+	sortname.push_back(s.getComName());
 
 	int n = indent.size();
 	// ->
@@ -221,6 +224,7 @@ void SuppliersRepo::editExist(int index, TCHAR comName[100], TCHAR ComMob[100], 
 			supliers[i].setJobTitle(buff9); 
 		}
 	}
+	sortname[index] = buff1;
 	saveData(); 
 }
 
@@ -327,7 +331,7 @@ void SuppliersRepo::sortByName(HWND hDlg, HWND hList)
 			}
 		}
 	}
-
+	
 	
 }
 

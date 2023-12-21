@@ -22,7 +22,7 @@ HWND hEditProductSKU, hEditProductName, hEditProductDesc, hEditProductInprice, h
 HWND hComboProdCategories, hComboProdSort, hEditProdNameSKU, hPriceSlider, hComboProdCategoriesAdd, hBtnCatAdd, hBtnCatOk, hEditCatAdd;
 
 //* GLOBAL Variers:
-bool isAuthorize = false;
+bool isAuthorize = true;
 bool isAdmin = true;
 bool continueProcess = true;
 bool isBtnEdit = false;
@@ -1169,8 +1169,10 @@ INT_PTR CALLBACK Supliers(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 else {
                     if (MessageBox(hDlg, L"Are you shure?", L"Warning!", MB_OKCANCEL | MB_ICONWARNING) == true) {
-                        int colItem = SendMessage(hList, LB_DELETESTRING, WPARAM(selIndex), 0);
+                        //int colItem = SendMessage(hList, LB_DELETESTRING, WPARAM(selIndex), 0);
                         supplierRepo->delSuplier(selIndex);
+                        SendMessage(hList, LB_RESETCONTENT, 0, 0); 
+                        supplierRepo->displayAll(hDlg, hList); 
 
                     }
                 }
